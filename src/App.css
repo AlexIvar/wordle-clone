@@ -1,38 +1,70 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 100vh;
+  background-color: #301c82;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  height: 50vh;
+  width: 100%;
+}
+.card-item {
+  box-sizing: border-box;
+  /*border: 1px solid rgb(10, 144, 233);*/
+  border-radius: 5px;
+  display: inline-block;
+  width: 400px;
+  height: 410px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
 }
 
-.App-link {
-  color: #61dafb;
+.card-item div {
+  display: flex;
+  flex: 1 1 160px;
+  border: 3px solid #8b72bb9e;/*#8b72bb;*/
+  border-radius: 3px;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  /*background-color: #9e90d5;*/
+  background-color: #301c82;
+  height: 60px;
 }
 
+.card-item div p {
+  font-family: "Poppins", sans-serif;
+  /*font-family: "Fredoka One", cursive;*/
+  /*font-family: "Rubik Mono One", sans-serif;*/
+  font-size: 25px;
+  color: #eeeeee;
+  font-weight: bold;
+}
+
+/*
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}*/
+
+@keyframes pop {
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes push {
+  50% {
+    transform: rotateX(180deg);
   }
 }

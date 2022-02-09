@@ -1,0 +1,41 @@
+.key-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 0px;
+  width: 100%;
+}
+.key-item {
+  box-sizing: border-box;
+  /*border: 1px solid #eeeeee;
+  border-radius: 5px;*/
+  display: inline-block;
+  width: 675px;
+  height: 250px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 77fr));
+}
+
+.key-item div {
+  display: flex;
+  flex: 1 1 160px;
+  border: 1px solid #eeeeee;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  color: #eeeeee;
+}
+
+.key-item div:hover {
+  /*border: 1px solid rgb(36, 74, 245);*/
+  background-color: #19ab86;
+  color: #eeeeee;
+  cursor: pointer;
+}
+
+#enterButton{
+  width: 670px;
+}
