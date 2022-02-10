@@ -22,6 +22,7 @@ function App() {
 
   //Current row of guesses
   const [currentRow, setCurrentRow] = useState(0);
+  //Current letter column
   const [currentColum, setCurrentColumn] = useState(0);
   const [getRef, setRef] = useDynamicRefs();
   //const [wordList, SetwordList] = useState([prettyWordList]);
@@ -30,17 +31,22 @@ function App() {
     prettyUpperWordList[Math.floor(Math.random() * prettyUpperWordList.length)]
   );
 
+  //A function that starts a new game by initializing the game board
   const startNewGame = () => {
+    //Picks a random word as the answer for the current game
     setAnswer(
       prettyUpperWordList[
         Math.floor(Math.random() * prettyUpperWordList.length)
       ]
     );
+    //Empty the current board
     setMatrix(
       Array.from({ length: m }, () => Array.from({ length: n }, () => ""))
     );
+    //Set the current row and column to the first row and column of the new board
     setCurrentRow(0);
     setCurrentColumn(0);
+
     //Clean the styles
     for (var i = 0; i < 6; i++) {
       for (var j = 0; j < 5; j++) {
@@ -60,7 +66,8 @@ function App() {
     let answerArr = answer.split("");
     //initialize counter
     let counter = 0;
-    let arr = ["0.4", "0.8", "1.2", "1.6", "2"];
+    //A way to delay the anymation for each column
+    let arr = ["0.3", "0.7", "1.1", "1.5", "1.9"];
     //check whole row
     for (var i = 0; i < 5; i++) {
       let currLetter = matrix[currentRow][i];
@@ -91,21 +98,27 @@ function App() {
       }
     }
 
+    //the counter is 5 that means all letter are correct and the game has been won
     if (counter === 5 && currentRow <= 6) {
       setTimeout(function () {
         alert("Vá geggjað nice! Þú vannst! Til hamingju með að vera þú!");
-        startNewGame();
+        //startNewGame();
       }, 3000);
+      //THis was the last row and so the game is over
     } else if (currentRow === 5 && counter < 5) {
       alert("Orðið var: " + answer);
       startNewGame();
+      //Still playing so the next row is selected
     } else {
       setCurrentRow((prevRow) => prevRow + 1);
     }
   };
 
+  //This function is called each time a letter is entered
   const handleChange = (letter) => {
+    //Login answer for development...
     console.log(answer);
+    //Getting the reference to the selected key on the keyboard
     var id2 = getRef(LetterKeys[letter]);
     if (currentColum === 5 && letter === "EN") {
       //Current guess
@@ -114,10 +127,12 @@ function App() {
       if (prettyUpperWordList.indexOf(currentGuess) === -1) {
         alert("Orðið er ekki til í orðalistanum:(");
       } else {
+        //The word exists in the word list so check if the guess is correct
         checkIfWon();
         //starting a new row
         setCurrentColumn(() => 0);
       }
+      //If user is trying to sumbit an uncomplete answer
     } else if (
       (currentColum === 5 && letter !== "EN" && letter !== "DEL") ||
       (currentColum < 5 && letter === "EN")
@@ -126,6 +141,7 @@ function App() {
       setTimeout(function () {
         id2.current.style = "";
       }, 1000);
+      // The user is deleting previous input
     } else if (letter === "DEL") {
       //I am not going to allow delete further than 0
       if (currentColum !== 0) {
