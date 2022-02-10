@@ -94,7 +94,7 @@ function App() {
     if (counter === 5 && currentRow <= 6) {
       setTimeout(function () {
         alert("Vá geggjað nice! Þú vannst! Til hamingju með að vera þú!");
-        // startNewGame();
+        startNewGame();
       }, 3000);
     } else if (currentRow === 5 && counter < 5) {
       alert("Orðið var: " + answer);

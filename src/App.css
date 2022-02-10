@@ -6,6 +6,13 @@
   align-items: center;
 }
 
+.App h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -37,7 +44,7 @@
   margin: 2px;
   /*background-color: #9e90d5;*/
   background-color: #301c82;
-  height: 60px;
+  height: 70px;
 }
 
 .card-item div p {

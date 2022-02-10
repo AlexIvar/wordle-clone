@@ -36,4 +36,5 @@ export const LetterKeys = {
   Ð: 219,
   Ö: 189,
   EN: 13,
+  DEL: 8,
 };
