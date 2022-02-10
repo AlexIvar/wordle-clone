@@ -4,6 +4,7 @@
   height: 100vh;
   background-color: #301c82;
   align-items: center;
+  flex-direction: column;
 }
 
 .App h2 {
@@ -28,10 +29,9 @@
   border-radius: 5px;
   display: inline-block;
   width: 400px;
-  height: 410px;
+  /*height: 410px;*/
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-  margin-top: -150px;
 }
 
 .card-item div {
@@ -55,16 +55,6 @@
   color: #eeeeee;
   font-weight: bold;
 }
-
-/*
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}*/
 
 @keyframes pop {
   50% {

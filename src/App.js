@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import Card from "./Components/Card.js";
 import Keyboard from "./Components/Keyboard.js";
+import Settings from "./Components/Settings.js";
 import useDynamicRefs from "use-dynamic-refs";
 import { LetterKeys } from "./Data/LetterKeys.js";
 import { prettyUpperWordList } from "./Data/WordsUpper";
@@ -165,24 +166,27 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <div className="card-container">
-        <div className="card-item">
-          {Object.keys(matrix).map((keyOuter) => {
-            return Object.keys(matrix[keyOuter]).map((keyInner) => {
-              return (
-                <Card
-                  key={`${keyInner}-${keyOuter}`}
-                  innerRef={setRef(`${keyOuter}-${keyInner}`)}
-                  letter={matrix[keyOuter][keyInner]}
-                />
-              );
-            });
-          })}
+    <>
+      <div className="App">
+      <Settings />
+        <div className="card-container">
+          <div className="card-item">
+            {Object.keys(matrix).map((keyOuter) => {
+              return Object.keys(matrix[keyOuter]).map((keyInner) => {
+                return (
+                  <Card
+                    key={`${keyInner}-${keyOuter}`}
+                    innerRef={setRef(`${keyOuter}-${keyInner}`)}
+                    letter={matrix[keyOuter][keyInner]}
+                  />
+                );
+              });
+            })}
+          </div>
+          <Keyboard onChange={handleChange} />
         </div>
-        <Keyboard onChange={handleChange} />
       </div>
-    </div>
+    </>
   );
 }
 
