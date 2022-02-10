@@ -11,48 +11,82 @@ export const Keyboard = (props) => {
   useEffect(() => {
     function handleKeyDown(e) {
       e.preventDefault();
-      /*console.log(e.target);
+      /* console.log(e.target);
       console.log(e.keyCode);
-      console.log(e.code);
-      if (e.code === "Quote" && e.code === "KeyA") {
-        console.log("fire!");
-      }*/
-      let id = 0;
-      if (comma === true) {
-        id = getRef(22265);
-      } else {
+      console.log(e.code);*/
+
+      //Check if comma was pressed
+      if (e.keyCode === 222) {
+        setComma((state) => true);
+      } else if (comma === false) {
+        let id = 0;
         id = getRef(e.keyCode);
+        id.current.click();
+        setComma(false);
       }
-      id.current.click();
+    }
+
+    function handleKeyUp(e) {
+      let id2 = getRef(222 + e.keyCode);
+      if (comma === true && id2 !== undefined) {
+        id2.current.click();
+        setComma(false);
+      }
     }
 
     document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
 
     return function cleanup() {
       document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp);
     };
-  }, []);
+  }, [comma]);
 
   return (
     <div className="key-container">
       <div className="key-item">
-        <div ref={setRef(65)} onClick={() => props.onChange("A")}>
-          A
+        <div ref={setRef(81)} onClick={() => props.onChange("Q")}>
+          Q
         </div>
-        <div ref={setRef(22265)} onClick={() => props.onChange("Á")}>
-          Á
-        </div>
-        <div ref={setRef(66)} onClick={() => props.onChange("B")}>
-          B
-        </div>
-        <div ref={setRef(68)} onClick={() => props.onChange("D")}>
-          D
+        <div ref={setRef(87)} onClick={() => props.onChange("W")}>
+          W
         </div>
         <div ref={setRef(69)} onClick={() => props.onChange("E")}>
           E
         </div>
-        <div ref={setRef(22269)} onClick={() => props.onChange("É")}>
-          É
+        <div ref={setRef(82)} onClick={() => props.onChange("R")}>
+          R
+        </div>
+        <div ref={setRef(84)} onClick={() => props.onChange("T")}>
+          T
+        </div>
+        <div ref={setRef(89)} onClick={() => props.onChange("Y")}>
+          Y
+        </div>
+        <div ref={setRef(85)} onClick={() => props.onChange("U")}>
+          U
+        </div>
+        <div ref={setRef(73)} onClick={() => props.onChange("I")}>
+          I
+        </div>
+        <div ref={setRef(79)} onClick={() => props.onChange("O")}>
+          O
+        </div>
+        <div ref={setRef(80)} onClick={() => props.onChange("P")}>
+          P
+        </div>
+        <div ref={setRef(8)} onClick={() => props.onChange("DEL")}>
+          <FiDelete />
+        </div>
+        <div ref={setRef(65)} onClick={() => props.onChange("A")}>
+          A
+        </div>
+        <div ref={setRef(83)} onClick={() => props.onChange("S")}>
+          S
+        </div>
+        <div ref={setRef(68)} onClick={() => props.onChange("D")}>
+          D
         </div>
         <div ref={setRef(70)} onClick={() => props.onChange("F")}>
           F
@@ -63,15 +97,6 @@ export const Keyboard = (props) => {
         <div ref={setRef(72)} onClick={() => props.onChange("H")}>
           H
         </div>
-        <div ref={setRef(73)} onClick={() => props.onChange("I")}>
-          I
-        </div>
-        <div ref={setRef(8)} onClick={() => props.onChange("DEL")}>
-          <FiDelete />
-        </div>
-        <div ref={setRef(22273)} onClick={() => props.onChange("Í")}>
-          Í
-        </div>
         <div ref={setRef(74)} onClick={() => props.onChange("J")}>
           J
         </div>
@@ -81,53 +106,58 @@ export const Keyboard = (props) => {
         <div ref={setRef(76)} onClick={() => props.onChange("L")}>
           L
         </div>
-        <div ref={setRef(77)} onClick={() => props.onChange("M")}>
-          M
+        <div ref={setRef(186)} onClick={() => props.onChange("Æ")}>
+          Æ
         </div>
-        <div ref={setRef(78)} onClick={() => props.onChange("N")}>
-          N
+        <div ref={setRef(13)} onClick={() => props.onChange("EN")}>
+          <AiOutlineEnter />
         </div>
-        <div ref={setRef(79)} onClick={() => props.onChange("O")}>
-          O
-        </div>
-        <div ref={setRef(22279)} onClick={() => props.onChange("Ó")}>
-          Ó
-        </div>
-        <div ref={setRef(80)} onClick={() => props.onChange("P")}>
-          P
-        </div>
-        <div ref={setRef(82)} onClick={() => props.onChange("R")}>
-          R
-        </div>
-        <div ref={setRef(83)} onClick={() => props.onChange("S")}>
-          S
-        </div>
-        <div ref={setRef(84)} onClick={() => props.onChange("T")}>
-          T
-        </div>
-        <div ref={setRef(85)} onClick={() => props.onChange("U")}>
-          U
-        </div>
-        <div ref={setRef(22285)} onClick={() => props.onChange("Ú")}>
-          Ú
-        </div>
-        <div ref={setRef(86)} onClick={() => props.onChange("V")}>
-          V
+        <div></div>
+        <div></div>
+        <div ref={setRef(90)} onClick={() => props.onChange("Z")}>
+          Z
         </div>
         <div ref={setRef(88)} onClick={() => props.onChange("X")}>
           X
         </div>
-        <div ref={setRef(89)} onClick={() => props.onChange("Y")}>
-          Y
+        <div ref={setRef(67)} onClick={() => props.onChange("C")}>
+          C
         </div>
-        <div ref={setRef(22289)} onClick={() => props.onChange("Ý")}>
+        <div ref={setRef(86)} onClick={() => props.onChange("V")}>
+          V
+        </div>
+        <div ref={setRef(66)} onClick={() => props.onChange("B")}>
+          B
+        </div>
+        <div ref={setRef(78)} onClick={() => props.onChange("N")}>
+          N
+        </div>
+        <div ref={setRef(77)} onClick={() => props.onChange("M")}>
+          M
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div ref={setRef(287)} onClick={() => props.onChange("Á")}>
+          Á
+        </div>
+        <div ref={setRef(291)} onClick={() => props.onChange("É")}>
+          É
+        </div>
+        <div ref={setRef(295)} onClick={() => props.onChange("Í")}>
+          Í
+        </div>
+        <div ref={setRef(301)} onClick={() => props.onChange("Ó")}>
+          Ó
+        </div>
+        <div ref={setRef(307)} onClick={() => props.onChange("Ú")}>
+          Ú
+        </div>
+        <div ref={setRef(311)} onClick={() => props.onChange("Ý")}>
           Ý
         </div>
         <div ref={setRef(191)} onClick={() => props.onChange("Þ")}>
           Þ
-        </div>
-        <div ref={setRef(186)} onClick={() => props.onChange("Æ")}>
-          Æ
         </div>
         <div ref={setRef(219)} onClick={() => props.onChange("Ð")}>
           Ð
@@ -135,9 +165,7 @@ export const Keyboard = (props) => {
         <div ref={setRef(189)} onClick={() => props.onChange("Ö")}>
           Ö
         </div>
-        <div ref={setRef(13)} onClick={() => props.onChange("EN")}>
-          <AiOutlineEnter />
-        </div>
+        <div></div>
       </div>
     </div>
   );

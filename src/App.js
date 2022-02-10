@@ -9,9 +9,12 @@ import "./App.css";
 function App() {
   const n = 5;
   const m = 6;
-  const green = "animation: push 1s forwards 1; background-color:#19AB86";
-  const yellow = "animation: push 1s forwards 1; background-color:#b5b500";
-  const red = "animation: push 1s forwards 1; background-color:rgb(255 44 44)";
+  let green =
+    "animation: push 0.4s backwards linear; background-color:#19AB86;";
+  let yellow =
+    "animation: push 0.4s backwards linear; background-color:#b5b500;";
+  let red =
+    "animation: push 0.4s backwards linear; background-color:rgb(255 44 44);";
 
   const [matrix, setMatrix] = useState(
     Array.from({ length: m }, () => Array.from({ length: n }, () => ""))
@@ -57,7 +60,7 @@ function App() {
     let answerArr = answer.split("");
     //initialize counter
     let counter = 0;
-
+    let arr = ["0.4", "0.8", "1.2", "1.6", "2"];
     //check whole row
     for (var i = 0; i < 5; i++) {
       let currLetter = matrix[currentRow][i];
@@ -71,7 +74,7 @@ function App() {
 
       //If the letter is on the right spot then colour it green
       if (currLetter === answerArr[i]) {
-        id.current.style = green;
+        id.current.style = green + " animation-delay:" + arr[i] + "s;";
         id2.current.style = green;
         counter++;
         //If the letter is in the word but not on the right spot
@@ -79,20 +82,20 @@ function App() {
         currLetter !== answerArr[i] &&
         answerArr.indexOf(matrix[currentRow][i]) > -1
       ) {
-        id.current.style = yellow;
+        id.current.style = yellow + " animation-delay:" + arr[i] + "s;";
         id2.current.style = yellow;
         //The letter is not in the word
       } else {
-        id.current.style = red;
+        id.current.style = red + " animation-delay:" + arr[i] + "s;";
         id2.current.style = red;
       }
     }
 
     if (counter === 5 && currentRow <= 6) {
       setTimeout(function () {
-        alert("Nice þú vannst!");
+        alert("Vá geggjað nice! Þú vannst! Til hamingju með að vera þú!");
         // startNewGame();
-      }, 1000);
+      }, 3000);
     } else if (currentRow === 5 && counter < 5) {
       alert("Orðið var: " + answer);
       startNewGame();
@@ -103,6 +106,7 @@ function App() {
 
   const handleChange = (letter) => {
     console.log(answer);
+    var id2 = getRef(LetterKeys[letter]);
     if (currentColum === 5 && letter === "EN") {
       //Current guess
       let currentGuess = matrix[currentRow].join("");
@@ -118,7 +122,10 @@ function App() {
       (currentColum === 5 && letter !== "EN" && letter !== "DEL") ||
       (currentColum < 5 && letter === "EN")
     ) {
-      //do nothing
+      id2.current.style = "animation: shake 0.82s";
+      setTimeout(function () {
+        id2.current.style = "";
+      }, 1000);
     } else if (letter === "DEL") {
       //I am not going to allow delete further than 0
       if (currentColum !== 0) {
@@ -157,7 +164,6 @@ function App() {
             });
           })}
         </div>
-
         <Keyboard onChange={handleChange} />
       </div>
     </div>

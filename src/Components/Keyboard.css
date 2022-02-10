@@ -31,11 +31,11 @@
 
 .key-item div:hover {
   /*border: 1px solid rgb(36, 74, 245);*/
-  background-color: #19ab86;
+  background-color: #6852a6;
   color: #eeeeee;
   cursor: pointer;
 }
 
-#enterButton{
+#enterButton {
   width: 670px;
 }
