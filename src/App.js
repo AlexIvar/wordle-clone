@@ -1,7 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Card from "./Components/Card.js";
 import Keyboard from "./Components/Keyboard.js";
-import Settings from "./Components/Settings.js";
+import Header from "./Components/Header.js";
 import useDynamicRefs from "use-dynamic-refs";
 import { LetterKeys } from "./Data/LetterKeys.js";
 import { prettyUpperWordList } from "./Data/WordsUpper";
@@ -26,11 +26,17 @@ function App() {
   //Current letter column
   const [currentColum, setCurrentColumn] = useState(0);
   const [getRef, setRef] = useDynamicRefs();
+  const [settingsShown, setSettingsShown] = useState(false);
   //const [wordList, SetwordList] = useState([prettyWordList]);
 
   const [answer, setAnswer] = useState(
     prettyUpperWordList[Math.floor(Math.random() * prettyUpperWordList.length)]
   );
+
+  //Shows and hides the settings menu
+  const toggleSettings = () => {
+    setSettingsShown(!settingsShown);
+  };
 
   //A function that starts a new game by initializing the game board
   const startNewGame = () => {
@@ -68,7 +74,7 @@ function App() {
     //initialize counter
     let counter = 0;
     //A way to delay the anymation for each column
-    let arr = ["0.3", "0.7", "1.1", "1.5", "1.9"];
+    let arr = ["0", "0.2", "0.4", "0.6", "0.8"];
     //check whole row
     for (var i = 0; i < 5; i++) {
       let currLetter = matrix[currentRow][i];
@@ -117,72 +123,102 @@ function App() {
 
   //This function is called each time a letter is entered
   const handleChange = (letter) => {
-    //Login answer for development...
-    console.log(answer);
-    //Getting the reference to the selected key on the keyboard
-    var id2 = getRef(LetterKeys[letter]);
-    if (currentColum === 5 && letter === "EN") {
-      //Current guess
-      let currentGuess = matrix[currentRow].join("");
-      //Check if guess exists in the wordList array
-      if (prettyUpperWordList.indexOf(currentGuess) === -1) {
-        alert("Orðið er ekki til í orðalistanum:(");
+    //Don't allow keyboard inputs while user is adjusting settings
+    if (!settingsShown) {
+      //Login answer for development...
+      console.log(answer);
+      //Getting the reference to the selected key on the keyboard
+      var id2 = getRef(LetterKeys[letter]);
+      if (currentColum === 5 && letter === "EN") {
+        //Current guess
+        let currentGuess = matrix[currentRow].join("");
+        //Check if guess exists in the wordList array
+        if (prettyUpperWordList.indexOf(currentGuess) === -1) {
+          alert("Orðið er ekki til í orðalistanum:(");
+        } else {
+          //The word exists in the word list so check if the guess is correct
+          checkIfWon();
+          //starting a new row
+          setCurrentColumn(() => 0);
+        }
+        //If user is trying to sumbit an uncomplete answer
+      } else if (
+        (currentColum === 5 && letter !== "EN" && letter !== "DEL") ||
+        (currentColum < 5 && letter === "EN")
+      ) {
+        id2.current.style = "animation: shake 0.82s";
+        setTimeout(function () {
+          id2.current.style = "";
+        }, 1000);
+        // The user is deleting previous input
+      } else if (letter === "DEL") {
+        //I am not going to allow delete further than 0
+        if (currentColum !== 0) {
+          let copy = [...matrix];
+          copy[currentRow][currentColum - 1] = "";
+          setCurrentColumn((prevColumn) => prevColumn - 1);
+          setMatrix(copy);
+          let id3 = getRef(`${currentRow}-${currentColum - 1}`);
+          id3.current.style = "";
+        }
       } else {
-        //The word exists in the word list so check if the guess is correct
-        checkIfWon();
-        //starting a new row
-        setCurrentColumn(() => 0);
-      }
-      //If user is trying to sumbit an uncomplete answer
-    } else if (
-      (currentColum === 5 && letter !== "EN" && letter !== "DEL") ||
-      (currentColum < 5 && letter === "EN")
-    ) {
-      id2.current.style = "animation: shake 0.82s";
-      setTimeout(function () {
-        id2.current.style = "";
-      }, 1000);
-      // The user is deleting previous input
-    } else if (letter === "DEL") {
-      //I am not going to allow delete further than 0
-      if (currentColum !== 0) {
         let copy = [...matrix];
-        copy[currentRow][currentColum - 1] = "";
-        setCurrentColumn((prevColumn) => prevColumn - 1);
+        copy[currentRow][currentColum] = letter;
         setMatrix(copy);
-        let id3 = getRef(`${currentRow}-${currentColum - 1}`);
-        id3.current.style = "";
+        let id3 = getRef(`${currentRow}-${currentColum}`);
+        id3.current.style =
+          "animation: pop 0.1s linear 1;  border: 3px solid #ac98d39e;";
+        //new column
+        setCurrentColumn((prevColumn) => prevColumn + 1);
       }
-    } else {
-      let copy = [...matrix];
-      copy[currentRow][currentColum] = letter;
-      setMatrix(copy);
-      let id3 = getRef(`${currentRow}-${currentColum}`);
-      id3.current.style =
-        "animation: pop 0.1s linear 1;  border: 3px solid #ac98d39e;";
-      //new column
-      setCurrentColumn((prevColumn) => prevColumn + 1);
     }
   };
 
   return (
     <>
       <div className="App">
-      <Settings />
+        <Header onSettingsClicked={toggleSettings} />
         <div className="card-container">
-          <div className="card-item">
-            {Object.keys(matrix).map((keyOuter) => {
-              return Object.keys(matrix[keyOuter]).map((keyInner) => {
-                return (
-                  <Card
-                    key={`${keyInner}-${keyOuter}`}
-                    innerRef={setRef(`${keyOuter}-${keyInner}`)}
-                    letter={matrix[keyOuter][keyInner]}
-                  />
-                );
-              });
-            })}
-          </div>
+          {!settingsShown && (
+            <div
+              className={settingsShown ? "card-item hide" : "card-item show"}
+            >
+              {Object.keys(matrix).map((keyOuter) => {
+                return Object.keys(matrix[keyOuter]).map((keyInner) => {
+                  return (
+                    <Card
+                      key={`${keyInner}-${keyOuter}`}
+                      innerRef={setRef(`${keyOuter}-${keyInner}`)}
+                      letter={matrix[keyOuter][keyInner]}
+                    />
+                  );
+                });
+              })}
+            </div>
+          )}
+          {settingsShown && (
+            <div
+              className={
+                settingsShown
+                  ? "card-items-settings show"
+                  : "card-items-settings hide"
+              }
+            >
+              <div id="settingsTitle">Settings</div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          )}
+
           <Keyboard onChange={handleChange} />
         </div>
       </div>
