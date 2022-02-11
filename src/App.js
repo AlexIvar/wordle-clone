@@ -5,6 +5,7 @@ import Header from "./Components/Header.js";
 import useDynamicRefs from "use-dynamic-refs";
 import { LetterKeys } from "./Data/LetterKeys.js";
 import { prettyUpperWordList } from "./Data/WordsUpper";
+import {HiOutlineVolumeOff, HiOutlineVolumeUp} from "react-icons/hi"
 import "./App.css";
 
 function App() {
@@ -179,39 +180,45 @@ function App() {
       <div className="App">
         <Header onSettingsClicked={toggleSettings} />
         <div className="card-container">
-          {!settingsShown && (
-            <div
-              className={settingsShown ? "card-item hide" : "card-item show"}
-            >
-              {Object.keys(matrix).map((keyOuter) => {
-                return Object.keys(matrix[keyOuter]).map((keyInner) => {
-                  return (
-                    <Card
-                      key={`${keyInner}-${keyOuter}`}
-                      innerRef={setRef(`${keyOuter}-${keyInner}`)}
-                      letter={matrix[keyOuter][keyInner]}
-                    />
-                  );
-                });
-              })}
-            </div>
-          )}
+          <div className={settingsShown ? "card-item hide" : "card-item show"}>
+            {Object.keys(matrix).map((keyOuter) => {
+              return Object.keys(matrix[keyOuter]).map((keyInner) => {
+                return (
+                  <Card
+                    key={`${keyInner}-${keyOuter}`}
+                    innerRef={setRef(`${keyOuter}-${keyInner}`)}
+                    letter={matrix[keyOuter][keyInner]}
+                  />
+                );
+              });
+            })}
+          </div>
+
           {settingsShown && (
             <div
               className={
                 settingsShown
-                  ? "card-items-settings show"
-                  : "card-items-settings hide"
+                  ? "card-items-settings showSettings"
+                  : "card-items-settings hideSettings"
               }
             >
-              <div id="settingsTitle">Settings</div>
+              <div id="settingsTitle">Stillingar</div>
               <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
+              <div id="settingsText">Tungumál</div>
+              <div>
+                <div id="settingsOption">Íslenska</div>
+                <div id="settingsOption">Enska</div>
+              </div>
+              <div id="settingsText">Erfiðleikastig</div>
+              <div>
+                <div id="settingsOption">Létt</div>
+                <div id="settingsOption">Erfitt</div>
+              </div>
+              <div id="settingsText">Hljóðbrellur</div>
+              <div>
+                <div id="settingsOptionIcon"><HiOutlineVolumeUp/></div>
+                <div id="settingsOptionIcon"><HiOutlineVolumeOff /></div>
+              </div>
               <div></div>
               <div></div>
               <div></div>

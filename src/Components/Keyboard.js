@@ -7,7 +7,8 @@ import "./Keyboard.css";
 export const Keyboard = (props) => {
   const [getRef, setRef] = useDynamicRefs();
   const [comma, setComma] = useState(false);
-
+  //These letters can have commas
+  const specialLetters = [65, 69, 73, 79, 85, 89, 222];
   useEffect(() => {
     function handleKeyDown(e) {
       e.preventDefault();
@@ -18,7 +19,8 @@ export const Keyboard = (props) => {
       //Check if comma was pressed
       if (e.keyCode === 222) {
         setComma((state) => true);
-      } else if (comma === false) {
+        //if comma is pressed and then a letter not able to have a comma then we can continue here
+      } else if (comma === false || !specialLetters.includes(e.keyCode)) {
         let id = 0;
         id = getRef(e.keyCode);
         id.current.click();
