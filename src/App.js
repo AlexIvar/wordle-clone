@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import Card from "./Components/Card.js";
 import Keyboard from "./Components/Keyboard.js";
 import Header from "./Components/Header.js";
+import SettingsMenu from "./Components/SettingsMenu.js";
 import useDynamicRefs from "use-dynamic-refs";
 import { LetterKeys } from "./Data/LetterKeys.js";
 import { prettyUpperWordList } from "./Data/WordsUpper";
-import { HiOutlineVolumeOff, HiOutlineVolumeUp } from "react-icons/hi";
 import { styles } from "./Data/AnimationStyles.js";
 /*Sounds*/
 import pop from "./Sounds/pop.mp3";
@@ -31,6 +31,12 @@ function App() {
     prettyUpperWordList[Math.floor(Math.random() * prettyUpperWordList.length)]
   );
 
+  /*Global settings */
+  const [language, setLanguage] = useState("is");
+  const [level, setLevel] = useState("hard");
+  const [sounds, setSounds] = useState("on");
+
+  /*Sounds*/
   const [playbackRate, setPlaybackRate] = useState(0.8);
   const [play] = useSound(pop, {
     playbackRate,
@@ -194,6 +200,17 @@ function App() {
     }
   };
 
+  /*Props*/
+  let settingsProps = {
+    settingsShown,
+    language,
+    setLanguage,
+    level,
+    setLevel,
+    sounds,
+    setSounds
+  };
+
   return (
     <>
       <div className="App">
@@ -213,41 +230,7 @@ function App() {
             })}
           </div>
 
-          {settingsShown && (
-            <div
-              className={
-                settingsShown
-                  ? "card-items-settings showSettings"
-                  : "card-items-settings hideSettings"
-              }
-            >
-              <div id="settingsTitle">Stillingar</div>
-              <div></div>
-              <div id="settingsText">Tungumál</div>
-              <div>
-                <div id="settingsOption">Íslenska</div>
-                <div id="settingsOption">Enska</div>
-              </div>
-              <div id="settingsText">Erfiðleikastig</div>
-              <div>
-                <div id="settingsOption">Létt</div>
-                <div id="settingsOption">Erfitt</div>
-              </div>
-              <div id="settingsText">Hljóðbrellur</div>
-              <div>
-                <div id="settingsOptionIcon">
-                  <HiOutlineVolumeUp />
-                </div>
-                <div id="settingsOptionIcon">
-                  <HiOutlineVolumeOff />
-                </div>
-              </div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          )}
+          {settingsShown && <SettingsMenu {...settingsProps} />}
 
           <Keyboard onChange={handleChange} />
         </div>
