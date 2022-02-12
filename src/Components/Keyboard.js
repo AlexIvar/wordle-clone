@@ -7,11 +7,13 @@ import "./Keyboard.css";
 export const Keyboard = (props) => {
   const [getRef, setRef] = useDynamicRefs();
   const [comma, setComma] = useState(false);
+
   //These letters can have commas
   const specialLetters = [65, 69, 73, 79, 85, 89, 222];
   useEffect(() => {
     function handleKeyDown(e) {
       e.preventDefault();
+
       /* console.log(e.target);
       console.log(e.keyCode);
       console.log(e.code);*/

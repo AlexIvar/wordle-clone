@@ -3,7 +3,7 @@ export const LetterKeys = {
   Á: 287,
   B: 66,
   C: 67,
-  D: 69,
+  D: 68,
   E: 69,
   É: 291,
   F: 70,
