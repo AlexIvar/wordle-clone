@@ -11,7 +11,7 @@ export const Header = (props) => {
   const [playbackRate, setPlaybackRate] = useState(0.75);
   const [play] = useSound(pop, {
     playbackRate,
-    volume: 0.5,
+    volume: props.sounds === "on" ? 0.5 : 0,
   });
 
   //Function that hides and show the settings menu

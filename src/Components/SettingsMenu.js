@@ -1,6 +1,7 @@
 import React from "react";
-import { HiOutlineVolumeOff, HiOutlineVolumeUp } from "react-icons/hi";
+import { Tanslations } from "../Data/Translations.js";
 import "./SettingsMenu.css";
+/*import { HiOutlineVolumeOff, HiOutlineVolumeUp } from "react-icons/hi";*/
 
 export const SettingsMenu = (props) => {
   const handleLanguageClick = (e) => {
@@ -28,9 +29,9 @@ export const SettingsMenu = (props) => {
       }
     >
       {console.log(props)}
-      <div id="settingsTitle">Stillingar</div>
+      <div id="settingsTitle">{Tanslations.settings[props.language]}</div>
       <div></div>
-      <div id="settingsText">Tungumál</div>
+      <div id="settingsText">{Tanslations.language[props.language]}</div>
       <div>
         <div>
           <button
@@ -38,7 +39,7 @@ export const SettingsMenu = (props) => {
             value={"is"}
             onClick={(e) => handleLanguageClick(e, "value")}
           >
-            Íslenska
+            {Tanslations.icelandic[props.language]}
           </button>
         </div>
         <div>
@@ -47,11 +48,11 @@ export const SettingsMenu = (props) => {
             value={"en"}
             onClick={(e) => handleLanguageClick(e, "value")}
           >
-            English
+            {Tanslations.english[props.language]}
           </button>
         </div>
       </div>
-      <div id="settingsText">Erfiðleikastig</div>
+      <div id="settingsText">{Tanslations.difficulty[props.language]}</div>
       <div>
         <div>
           <button
@@ -59,7 +60,7 @@ export const SettingsMenu = (props) => {
             value={"easy"}
             onClick={(e) => handleDifficultyClick(e, "value")}
           >
-            Létt
+            {Tanslations.easy[props.language]}
           </button>
         </div>
         <div>
@@ -68,11 +69,11 @@ export const SettingsMenu = (props) => {
             value={"hard"}
             onClick={(e) => handleDifficultyClick(e, "value")}
           >
-            Erfitt
+            {Tanslations.hard[props.language]}
           </button>
         </div>
       </div>
-      <div id="settingsText">Hljóðbrellur</div>
+      <div id="settingsText">{Tanslations.sounds[props.language]}</div>
       <div>
         <div>
           <button
@@ -80,7 +81,8 @@ export const SettingsMenu = (props) => {
             value={"on"}
             onClick={(e) => handleSoundsClick(e, "value")}
           >
-            {/*<HiOutlineVolumeUp />*/}Á
+            {/*<HiOutlineVolumeUp />*/}
+            {Tanslations.on[props.language]}
           </button>
         </div>
         <div>
@@ -89,7 +91,8 @@ export const SettingsMenu = (props) => {
             value={"off"}
             onClick={(e) => handleSoundsClick(e, "value")}
           >
-            {/*<HiOutlineVolumeOff /> */}Af
+            {/*<HiOutlineVolumeOff /> */}
+            {Tanslations.off[props.language]}
           </button>
         </div>
       </div>

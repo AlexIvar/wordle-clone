@@ -7,6 +7,7 @@ import useDynamicRefs from "use-dynamic-refs";
 import { LetterKeys } from "./Data/LetterKeys.js";
 import { prettyUpperWordList } from "./Data/WordsUpper";
 import { styles } from "./Data/AnimationStyles.js";
+
 /*Sounds*/
 import pop from "./Sounds/pop.mp3";
 import useSound from "use-sound";
@@ -40,7 +41,7 @@ function App() {
   const [playbackRate, setPlaybackRate] = useState(0.8);
   const [play] = useSound(pop, {
     playbackRate,
-    volume: 0.5,
+    volume: sounds === "on" ? 0.5 : 0,
   });
 
   //Shows and hides the settings menu
@@ -208,13 +209,17 @@ function App() {
     level,
     setLevel,
     sounds,
-    setSounds
+    setSounds,
+  };
+
+  let headerProps = {
+    sounds,
   };
 
   return (
     <>
       <div className="App">
-        <Header onSettingsClicked={toggleSettings} />
+        <Header onSettingsClicked={toggleSettings} {...headerProps} />
         <div className="card-container">
           <div className={settingsShown ? "card-item hide" : "card-item show"}>
             {Object.keys(matrix).map((keyOuter) => {
