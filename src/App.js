@@ -3,6 +3,7 @@ import Card from "./Components/Card.js";
 import Keyboard from "./Components/Keyboard.js";
 import Header from "./Components/Header.js";
 import SettingsMenu from "./Components/SettingsMenu.js";
+import GameMenu from "./Components/GameMenu.js";
 import useDynamicRefs from "use-dynamic-refs";
 import { LetterKeys } from "./Data/LetterKeys.js";
 import { prettyUpperWordList } from "./Data/WordsUpper.js";
@@ -30,10 +31,12 @@ function App() {
   const [currentColum, setCurrentColumn] = useState(0);
   const [getRef, setRef] = useDynamicRefs();
   const [settingsShown, setSettingsShown] = useState(false);
+  const [gameMenuShown, setGameMenuShown] = useState(true);
   /*Global settings */
   const [language, setLanguage] = useState("en");
   const [level, setLevel] = useState("hard");
   const [sounds, setSounds] = useState("on");
+  const [gameResult, setGameResult] = useState("");
 
   const [answer, setAnswer] = useState(
     language === "is"
@@ -61,7 +64,12 @@ function App() {
   const startNewGame = (language) => {
     console.log("starting a new game");
     console.log(language);
+    //Starting a new game so the menu needs to be hiddens
+    setGameMenuShown(false);
+    //Inititalizing the game result
+    setGameResult("");
     //Picks a random word as the answer for the current game
+    console.log("finding a new word");
     if (language === "is") {
       setAnswer(
         prettyUpperWordList[
@@ -86,12 +94,15 @@ function App() {
     setCurrentColumn(0);
 
     //Clean the styles
-    for (var i = 0; i < 6; i++) {
+    //Maybe we don't need this if we are going to remove the dom each time
+    //we show the game menu!
+    /*for (var i = 0; i < 6; i++) {
       for (var j = 0; j < 5; j++) {
         let id = getRef(`${i}-${j}`);
-        id.current.style = "";
+        //id.current.style = "";
       }
-    }
+    }*/
+
     //Clean the keyboard
     for (var key in LetterKeys) {
       let id2 = getRef(LetterKeys[key]);
@@ -99,11 +110,24 @@ function App() {
     }
   };
 
+  //Simple function that starts a new game
+  const handleStartNewGame = () => {
+    startNewGame(language);
+  };
+
+  //Funciton that shows the game menu after each game
+  const handleGameResults = (result) => {
+    setGameResult(result);
+    setGameMenuShown(true);
+  };
+
+  //Functuion that changes the language and starts a new game with the current language word list
   const handleLanguageChange = (language) => {
     setLanguage(language);
     startNewGame(language);
   };
 
+  //Function that goes through the current row and checks if the current guess is correct
   const checkIfWon = () => {
     //make the answer into an array of letters
     let answerArr = answer.split("");
@@ -144,13 +168,11 @@ function App() {
     //the counter is 5 that means all letter are correct and the game has been won
     if (counter === 5 && currentRow <= 6) {
       setTimeout(function () {
-        alert(Tanslations.winningText[language]);
-        //startNewGame();
+        handleGameResults("won");
       }, 3000);
       //THis was the last row and so the game is over
     } else if (currentRow === 5 && counter < 5) {
-      alert(Tanslations.TheAnswerWas[language] + answer);
-      startNewGame(language);
+      handleGameResults("lost");
       //Still playing so the next row is selected
     } else {
       setCurrentRow((prevRow) => prevRow + 1);
@@ -249,25 +271,38 @@ function App() {
     sounds,
   };
 
+  let gameMenuProps = {
+    settingsShown,
+    answer,
+    gameResult,
+    language,
+  };
+
   return (
     <>
       <div className="App">
         <Header onSettingsClicked={toggleSettings} {...headerProps} />
         <div className="card-container">
-          <div className={settingsShown ? "card-item hide" : "card-item show"}>
-            {Object.keys(matrix).map((keyOuter) => {
-              return Object.keys(matrix[keyOuter]).map((keyInner) => {
-                return (
-                  <Card
-                    key={`${keyInner}-${keyOuter}`}
-                    innerRef={setRef(`${keyOuter}-${keyInner}`)}
-                    letter={matrix[keyOuter][keyInner]}
-                  />
-                );
-              });
-            })}
-          </div>
-
+          {gameMenuShown && (
+            <GameMenu {...gameMenuProps} onStartNewGame={handleStartNewGame} />
+          )}
+          {!gameMenuShown && (
+            <div
+              className={settingsShown ? "card-item hide" : "card-item show"}
+            >
+              {Object.keys(matrix).map((keyOuter) => {
+                return Object.keys(matrix[keyOuter]).map((keyInner) => {
+                  return (
+                    <Card
+                      key={`${keyInner}-${keyOuter}`}
+                      innerRef={setRef(`${keyOuter}-${keyInner}`)}
+                      letter={matrix[keyOuter][keyInner]}
+                    />
+                  );
+                });
+              })}
+            </div>
+          )}
           {settingsShown && (
             <SettingsMenu
               {...settingsProps}

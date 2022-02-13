@@ -2,7 +2,7 @@
 .card-items-settings div {
   display: flex;
   flex: 1 1 160px;
-  border: 1px solid #8b72bb9e; /*#8b72bb;*/
+  /*border: 1px solid #8b72bb9e;*/ /*#8b72bb;*/
   border-radius: 3px;
   justify-content: center;
   align-items: center;
@@ -39,7 +39,7 @@
 }
 
 .settingsButton:hover {
-  background-color: #19ab86  !important;
+  background-color: #19ab86 !important;
 }
 
 .settingsOptionIcon {
@@ -53,11 +53,6 @@
   background-color: #19ab86;
 }
 
-/*Class if a option has been selected*/
-.active {
-  color: red;
-  background-color: #19ab86;
-}
 
 .selected {
   background-color: #19ab86 !important;

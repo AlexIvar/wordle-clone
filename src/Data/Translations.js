@@ -38,13 +38,33 @@ export const Tanslations = {
   off: {
     is: "Af",
     en: "Off",
+  },
+  winningText: {
+    is: "Vá geggjað nice!",
+    en: "Wow awsome!",
+  },
+  winningText2: {
+    is: "Þú vannst!",
+    en: "You won!",
+  },
+  looseText: {
+    is: "Æii, kemur...",
+    en: "Aww so close!",
+  },
+  looseText2: {
+    is: "Þú getur þetta!",
+    en: "You can do this!",
+  },
+  TheAnswerWas: {
+    is: "Orðið var: ",
+    en: "The word was: ",
+  },
+  welcomeText: {
+    is: "Hæ! Velkomin/n!",
+    en: "Hey! Welcome!",
     },
-    winningText: {
-        is: "Vá geggjað nice! Þú vannst! Til hamingju með að vera þú!",
-        en: "Wow awsome! You won! Congratulations on being you!"
-    },
-    TheAnswerWas: {
-        is: "Orðið var: ",
-        en: "The word was: "
-    }
+    welcomeTextSubtitle: {
+        is: "Til í þetta?",
+        en: "Are you ready for this?"
+  }
 };
