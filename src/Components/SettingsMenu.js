@@ -6,7 +6,7 @@ import "./SettingsMenu.css";
 export const SettingsMenu = (props) => {
   const handleLanguageClick = (e) => {
     e.preventDefault();
-    props.setLanguage(e.target.value);
+    props.onLanguageChange(e.target.value);
   };
 
   const handleDifficultyClick = (e) => {

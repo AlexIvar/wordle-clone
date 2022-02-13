@@ -38,5 +38,13 @@ export const Tanslations = {
   off: {
     is: "Af",
     en: "Off",
-  },
+    },
+    winningText: {
+        is: "Vá geggjað nice! Þú vannst! Til hamingju með að vera þú!",
+        en: "Wow awsome! You won! Congratulations on being you!"
+    },
+    TheAnswerWas: {
+        is: "Orðið var: ",
+        en: "The word was: "
+    }
 };

@@ -5,8 +5,10 @@ import Header from "./Components/Header.js";
 import SettingsMenu from "./Components/SettingsMenu.js";
 import useDynamicRefs from "use-dynamic-refs";
 import { LetterKeys } from "./Data/LetterKeys.js";
-import { prettyUpperWordList } from "./Data/WordsUpper";
+import { prettyUpperWordList } from "./Data/WordsUpper.js";
+import { englishUpperWordList } from "./Data/EnglishWords.js";
 import { styles } from "./Data/AnimationStyles.js";
+import { Tanslations } from "./Data/Translations.js";
 
 /*Sounds*/
 import pop from "./Sounds/pop.mp3";
@@ -28,14 +30,20 @@ function App() {
   const [currentColum, setCurrentColumn] = useState(0);
   const [getRef, setRef] = useDynamicRefs();
   const [settingsShown, setSettingsShown] = useState(false);
-  const [answer, setAnswer] = useState(
-    prettyUpperWordList[Math.floor(Math.random() * prettyUpperWordList.length)]
-  );
-
   /*Global settings */
-  const [language, setLanguage] = useState("is");
+  const [language, setLanguage] = useState("en");
   const [level, setLevel] = useState("hard");
   const [sounds, setSounds] = useState("on");
+
+  const [answer, setAnswer] = useState(
+    language === "is"
+      ? prettyUpperWordList[
+          Math.floor(Math.random() * prettyUpperWordList.length)
+        ]
+      : englishUpperWordList[
+          Math.floor(Math.random() * englishUpperWordList.length)
+        ]
+  );
 
   /*Sounds*/
   const [playbackRate, setPlaybackRate] = useState(0.8);
@@ -50,13 +58,25 @@ function App() {
   };
 
   //A function that starts a new game by initializing the game board
-  const startNewGame = () => {
+  const startNewGame = (language) => {
+    console.log("starting a new game");
+    console.log(language);
     //Picks a random word as the answer for the current game
-    setAnswer(
-      prettyUpperWordList[
-        Math.floor(Math.random() * prettyUpperWordList.length)
-      ]
-    );
+    if (language === "is") {
+      setAnswer(
+        prettyUpperWordList[
+          Math.floor(Math.random() * prettyUpperWordList.length)
+        ]
+      );
+    } else {
+      if (language === "en") {
+        setAnswer(
+          englishUpperWordList[
+            Math.floor(Math.random() * englishUpperWordList.length)
+          ]
+        );
+      }
+    }
     //Empty the current board
     setMatrix(
       Array.from({ length: m }, () => Array.from({ length: n }, () => ""))
@@ -77,6 +97,11 @@ function App() {
       let id2 = getRef(LetterKeys[key]);
       id2.current.style = "";
     }
+  };
+
+  const handleLanguageChange = (language) => {
+    setLanguage(language);
+    startNewGame(language);
   };
 
   const checkIfWon = () => {
@@ -119,13 +144,13 @@ function App() {
     //the counter is 5 that means all letter are correct and the game has been won
     if (counter === 5 && currentRow <= 6) {
       setTimeout(function () {
-        alert("Vá geggjað nice! Þú vannst! Til hamingju með að vera þú!");
+        alert(Tanslations.winningText[language]);
         //startNewGame();
       }, 3000);
       //THis was the last row and so the game is over
     } else if (currentRow === 5 && counter < 5) {
-      alert("Orðið var: " + answer);
-      startNewGame();
+      alert(Tanslations.TheAnswerWas[language] + answer);
+      startNewGame(language);
       //Still playing so the next row is selected
     } else {
       setCurrentRow((prevRow) => prevRow + 1);
@@ -154,8 +179,16 @@ function App() {
           //Current guess
           let currentGuess = matrix[currentRow].join("");
           //Check if guess exists in the wordList array
-          if (prettyUpperWordList.indexOf(currentGuess) === -1) {
+          if (
+            language === "is" &&
+            prettyUpperWordList.indexOf(currentGuess) === -1
+          ) {
             alert("Orðið er ekki til í orðalistanum:(");
+          } else if (
+            language === "en" &&
+            englishUpperWordList.indexOf(currentGuess) === -1
+          ) {
+            alert("The word does not exist in the word list");
           } else {
             //The word exists in the word list so check if the guess is correct
             checkIfWon();
@@ -235,7 +268,12 @@ function App() {
             })}
           </div>
 
-          {settingsShown && <SettingsMenu {...settingsProps} />}
+          {settingsShown && (
+            <SettingsMenu
+              {...settingsProps}
+              onLanguageChange={handleLanguageChange}
+            />
+          )}
 
           <Keyboard onChange={handleChange} />
         </div>
