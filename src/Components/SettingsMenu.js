@@ -35,7 +35,11 @@ export const SettingsMenu = (props) => {
       <div>
         <div>
           <button
-            className={props.language === "is" ? "selected" : ""}
+            className={
+              props.language === "is"
+                ? "settingsButton selected"
+                : "settingsButton"
+            }
             value={"is"}
             onClick={(e) => handleLanguageClick(e, "value")}
           >
@@ -44,7 +48,11 @@ export const SettingsMenu = (props) => {
         </div>
         <div>
           <button
-            className={props.language === "en" ? "selected" : ""}
+            className={
+              props.language === "en"
+                ? "settingsButton selected"
+                : "settingsButton"
+            }
             value={"en"}
             onClick={(e) => handleLanguageClick(e, "value")}
           >
@@ -56,7 +64,11 @@ export const SettingsMenu = (props) => {
       <div>
         <div>
           <button
-            className={props.level === "easy" ? "selected" : ""}
+            className={
+              props.level === "easy"
+                ? "settingsButton selected"
+                : "settingsButton"
+            }
             value={"easy"}
             onClick={(e) => handleDifficultyClick(e, "value")}
           >
@@ -65,7 +77,11 @@ export const SettingsMenu = (props) => {
         </div>
         <div>
           <button
-            className={props.level === "hard" ? "selected" : ""}
+            className={
+              props.level === "hard"
+                ? "settingsButton selected"
+                : "settingsButton"
+            }
             value={"hard"}
             onClick={(e) => handleDifficultyClick(e, "value")}
           >
@@ -77,7 +93,11 @@ export const SettingsMenu = (props) => {
       <div>
         <div>
           <button
-            className={props.sounds === "on" ? "selected" : ""}
+            className={
+              props.sounds === "on"
+                ? "settingsButton selected"
+                : "settingsButton"
+            }
             value={"on"}
             onClick={(e) => handleSoundsClick(e, "value")}
           >
@@ -87,7 +107,11 @@ export const SettingsMenu = (props) => {
         </div>
         <div>
           <button
-            className={props.sounds === "off" ? "selected" : ""}
+            className={
+              props.sounds === "off"
+                ? "settingsButton selected"
+                : "settingsButton"
+            }
             value={"off"}
             onClick={(e) => handleSoundsClick(e, "value")}
           >

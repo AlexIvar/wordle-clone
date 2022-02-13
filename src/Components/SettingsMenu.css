@@ -23,6 +23,14 @@
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
+.settingsButton {
+  background-color: #301c82;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .settingsOption {
   font-family: "Poppins", sans-serif;
   font-size: 16px;
@@ -30,8 +38,8 @@
   cursor: pointer;
 }
 
-.settingsOption:hover {
-  background-color: #19ab86;
+.settingsButton:hover {
+  background-color: #19ab86  !important;
 }
 
 .settingsOptionIcon {
@@ -51,8 +59,8 @@
   background-color: #19ab86;
 }
 
-.selected{
-    background-color: #19ab86 !important;
+.selected {
+  background-color: #19ab86 !important;
 }
 
 .showSettings {
