@@ -1,11 +1,18 @@
-//import Toggle from "react-toggle";
+import { useState } from "react";
 import { useColorScheme } from "../Platform/ColorScheme.tsx";
 import "../Components/DarkModeToggle.scss";
-//import { MdOutlineModeNight } from "react-icons/md";
-//import { BiSun } from "react-icons/bi";
+import pop from "../Sounds/switch.mp3";
+import useSound from "use-sound";
 
-const DarkModeToggle = () => {
+const DarkModeToggle = ({ sounds }) => {
   const { isDark, setIsDark } = useColorScheme();
+
+  const [playbackRate, setPlaybackRate] = useState(0.65);
+  const [play] = useSound(pop, {
+    playbackRate,
+    volume: sounds === "on" ? 0.5 : 0,
+  });
+
   return (
     <div>
       <input
@@ -13,10 +20,10 @@ const DarkModeToggle = () => {
         id="toggle"
         checked={isDark === "dark"}
         onChange={(event) => setIsDark(event.target.checked ? "dark" : "light")}
-        //icons={{ checked: <MdOutlineModeNight />, unchecked: <BiSun /> }}
         aria-label="Dark mode"
+        onClick={() => play()}
       />
-      <label for="toggle"></label>
+      <label htmlFor="toggle"></label>
     </div>
   );
 };

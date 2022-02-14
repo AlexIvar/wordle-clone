@@ -10,6 +10,7 @@ import { prettyUpperWordList } from "./Data/WordsUpper.js";
 import { englishUpperWordList } from "./Data/EnglishWords.js";
 import { styles } from "./Data/AnimationStyles.js";
 import { Tanslations } from "./Data/Translations.js";
+import { useColorScheme } from "./Platform/ColorScheme.tsx";
 
 /*Sounds*/
 import pop from "./Sounds/pop.mp3";
@@ -17,6 +18,8 @@ import useSound from "use-sound";
 import "./App.scss";
 
 function App() {
+  //Detect witch color sceme has been selected
+  useColorScheme();
   //There are 6 rows and 5 columns in the game
   const n = 5;
   const m = 6;

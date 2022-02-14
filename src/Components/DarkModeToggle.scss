@@ -1,7 +1,7 @@
 input[type="checkbox"] {
   visibility: hidden;
   &:checked + label {
-    transform: rotate(180deg);
+    //transform: rotate(180deg);
     background-color: #010527;
     &:before {
       transform: translateX(30px);
@@ -24,7 +24,7 @@ label {
 
   &:before {
     transition: transform 0.75s ease;
-    transition-delay: 0.5s;
+    //transition-delay: 0.5s;
     content: "";
     display: block;
     position: absolute;
