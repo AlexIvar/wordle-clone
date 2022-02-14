@@ -2,14 +2,13 @@
 .card-items-settings div {
   display: flex;
   flex: 1 1 160px;
-  /*border: 1px solid #8b72bb9e;*/ /*#8b72bb;*/
+  border: 1px solid #8b72bb9e;
   border-radius: 3px;
   justify-content: center;
   align-items: center;
   margin: 0px;
-  background-color: #301c82;
   height: 70px;
-  color: #eeeeee;
+  color: var(--color-foreground);
 }
 
 .card-items-settings {
@@ -18,23 +17,25 @@
   border-radius: 5px;
   display: inline-block;
   width: 400px;
-  /* height: 410px; */
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 }
 
 .settingsButton {
   background-color: #301c82;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
+  color: var(--color-foreground);
+  padding: 0.5em 1em;
+  display: flex;
+  border-radius: 4px;
   cursor: pointer;
+  border: none;
+  outline: none;
+  align-items: center;
 }
 
 .settingsOption {
   font-family: "Poppins", sans-serif;
   font-size: 16px;
-  color: #eeeeee;
+  color: var(--color-foreground);
   cursor: pointer;
 }
 
@@ -45,14 +46,13 @@
 .settingsOptionIcon {
   font-family: "Poppins", sans-serif;
   font-size: 25px;
-  color: #eeeeee;
+  color: var(--color-foreground);
   cursor: pointer;
 }
 
 .settingsOptionIcon:hover {
   background-color: #19ab86;
 }
-
 
 .selected {
   background-color: #19ab86 !important;
@@ -71,16 +71,17 @@
 #settingsTitle {
   font-family: "Poppins", sans-serif;
   font-size: 25px;
-  color: #eeeeee;
+  color: var(--color-foreground);
   font-weight: bold;
 }
 
 #settingsText {
   font-family: "Poppins", sans-serif;
   font-size: 20px;
-  color: #eeeeee;
+  color: var(--color-foreground);
   font-weight: bold;
 }
+
 @keyframes flip {
   /*Normal flip code*/
   from {

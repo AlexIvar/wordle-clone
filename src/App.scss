@@ -1,8 +1,24 @@
+body {
+  --color-background: #301c82;
+  --color-foreground: #eeeeee;
+
+  &.dark {
+    --color-background: #010527;
+    --color-foreground: #efefef;
+  }
+
+  &.light {
+    --color-background: #301c82;
+    --color-foreground: #efefef;
+  }
+
+  background-color: var(--color-background);
+}
+
 .App {
   text-align: center;
   display: flex;
   height: 200vh;
-  background-color: #301c82;
   align-items: center;
   flex-direction: column;
 }
@@ -43,7 +59,6 @@
   align-items: center;
   margin: 2px;
   /*background-color: #9e90d5;*/
-  background-color: #301c82;
   height: 70px;
 }
 

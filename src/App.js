@@ -14,7 +14,7 @@ import { Tanslations } from "./Data/Translations.js";
 /*Sounds*/
 import pop from "./Sounds/pop.mp3";
 import useSound from "use-sound";
-import "./App.css";
+import "./App.scss";
 
 function App() {
   //There are 6 rows and 5 columns in the game

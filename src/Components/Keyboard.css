@@ -22,18 +22,18 @@
 .key-item div {
   display: flex;
   flex: 1 1 160px;
-  border: 1px solid #eeeeee;
+  border: 1px solid var(--color-foreground);
   border-radius: 2px;
   justify-content: center;
   align-items: center;
   margin: 2px;
-  color: #eeeeee;
+  color: var(--color-foreground);
 }
 
 .key-item div:hover {
   /*border: 1px solid rgb(36, 74, 245);*/
   background-color: #6852a6;
-  color: #eeeeee;
+  color: var(--color-foreground);
   cursor: pointer;
 }
 
