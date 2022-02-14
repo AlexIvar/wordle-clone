@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Card.css";
+import "../Styles/Card.css";
 
 export const Card = (props) => {
   return (

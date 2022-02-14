@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useDynamicRefs from "use-dynamic-refs";
 import { FiDelete } from "react-icons/fi";
 import { AiOutlineEnter } from "react-icons/ai";
-import "./Keyboard.css";
+import "../Styles/Keyboard.css";
 
 export const Keyboard = (props) => {
   const [getRef, setRef] = useDynamicRefs();

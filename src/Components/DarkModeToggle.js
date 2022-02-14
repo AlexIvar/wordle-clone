@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useColorScheme } from "../Platform/ColorScheme.tsx";
-import "../Components/DarkModeToggle.scss";
+import "../Styles/DarkModeToggle.scss";
 import pop from "../Sounds/switch.mp3";
 import useSound from "use-sound";
 

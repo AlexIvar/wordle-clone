@@ -1,7 +1,7 @@
 import React from "react";
 import { Tanslations } from "../Data/Translations.js";
 import DarkModeToggle from "../Components/DarkModeToggle";
-import "./SettingsMenu.css";
+import "../Styles/SettingsMenu.css";
 
 /*import { HiOutlineVolumeOff, HiOutlineVolumeUp } from "react-icons/hi";*/
 

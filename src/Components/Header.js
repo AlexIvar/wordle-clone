@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Header.css";
+import "../Styles/Header.css";
 import { FiSettings } from "react-icons/fi";
 import { FaTimes } from "react-icons/fa";
 import pop from "../Sounds/swoosh.mp3";

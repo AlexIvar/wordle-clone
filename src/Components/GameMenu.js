@@ -1,6 +1,6 @@
 import React from "react";
 import { Tanslations } from "../Data/Translations";
-import "./GameMenu.css";
+import "../Styles/GameMenu.css";
 
 export const GameMenu = (props) => {
   return (
