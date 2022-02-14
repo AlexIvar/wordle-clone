@@ -8,17 +8,16 @@ export function useLanguage(): {
   language: String;
   setLanguage: (value: String) => void;
 } {
-  const systemPrefersIcelandic = useMediaQuery(
-    {
-      query: "(prefers-language: is)",
-    },
-    undefined
-  );
+  //Icelandic is the default language
+  const icelandicLanguage = "is";
   const [language, setLanguage] = useLanguageState();
   const value = useMemo(
-    () => (language === undefined ? !!systemPrefersIcelandic : language),
-    [language, systemPrefersIcelandic]
+    () => (language === undefined ? icelandicLanguage : language),
+    [language, icelandicLanguage]
   );
+  /*useEffect(() => {
+    console.log(value);
+  }, [value]);*/
   return {
     language: value,
     setLanguage,
