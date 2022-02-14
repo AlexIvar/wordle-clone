@@ -47,7 +47,7 @@ export const GameMenu = (props) => {
             onClick={() => props.onStartNewGame()}
             className="newGameButton"
           >
-            New Game
+            {Tanslations.startGame[props.language]}
           </button>
         </div>
       </div>

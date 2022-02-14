@@ -136,11 +136,11 @@ export const SettingsMenu = (props) => {
         </div>
       </div>
       <div>
-        <div id="settingsText">Dark mode</div>
-              <DarkModeToggle sounds={props.sounds}/>
+        <div id="settingsText">{Tanslations.darkmode[props.language]}</div>
+        <DarkModeToggle sounds={props.sounds} />
       </div>
-          <div></div>
-          
+      <div></div>
+
       <div></div>
     </div>
   );

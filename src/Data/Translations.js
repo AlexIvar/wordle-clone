@@ -62,9 +62,17 @@ export const Tanslations = {
   welcomeText: {
     is: "Hæ! Velkomin/n!",
     en: "Hey! Welcome!",
+  },
+  welcomeTextSubtitle: {
+    is: "Til í þetta?",
+    en: "Are you ready for this?",
+  },
+  startGame: {
+    is: "Hefja leik!",
+    en: "Start game!",
     },
-    welcomeTextSubtitle: {
-        is: "Til í þetta?",
-        en: "Are you ready for this?"
+    darkmode: {
+        is: "Dökk stilling",
+        en: "Dark mode"
   }
 };
