@@ -43,10 +43,16 @@ export const GameMenu = (props) => {
       <div></div>
       <div>
         <div>
-          <button onClick={() => props.onStartNewGame()} className="newGameButton">New Game</button>
+          <button
+            onClick={() => props.onStartNewGame()}
+            className="newGameButton"
+          >
+            New Game
+          </button>
         </div>
       </div>
-      <div>{props.gameResult !== "" && <button>Share</button>}</div>
+      <div></div>
+      <div></div>
     </div>
   );
 };

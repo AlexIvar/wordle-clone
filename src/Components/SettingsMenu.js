@@ -70,7 +70,6 @@ export const SettingsMenu = (props) => {
       <div>
         <div id="settingsText">{Tanslations.difficulty[props.language]}</div>
         <div>
-          {" "}
           <div>
             <div>
               <button
@@ -140,6 +139,8 @@ export const SettingsMenu = (props) => {
         <div id="settingsText">Dark mode</div>
               <DarkModeToggle sounds={props.sounds}/>
       </div>
+          <div></div>
+          
       <div></div>
     </div>
   );

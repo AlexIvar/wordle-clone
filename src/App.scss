@@ -1,10 +1,12 @@
 body {
   --color-background: #301c82;
-  --color-foreground: #eeeeee;
+  --color-foreground: #efefef;
+  --color-key-border:#efefef;
 
   &.dark {
     --color-background: #010527;
     --color-foreground: #efefef;
+    --color-key-border:#8b72bb9e;
   }
 
   &.light {
@@ -36,18 +38,19 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  /*height: 50vh;*/
   width: 100%;
 }
 .card-item {
   box-sizing: border-box;
-  /*border: 1px solid rgb(10, 144, 233);*/
+  border: 1px solid var(--color-background);
   border-radius: 5px;
   width: 400px;
   /*height: 410px;*/
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
   opacity: 1;
+  padding-bottom: 18.13px;
 }
 
 .card-item div {

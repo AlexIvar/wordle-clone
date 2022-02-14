@@ -13,11 +13,12 @@
 
 .card-items-settings {
   box-sizing: border-box;
-  border: 1px solid aqua;
+  border: 1px solid var(--color-key-border);
   border-radius: 5px;
   display: inline-block;
   width: 400px;
   display: grid;
+  padding-bottom: 8.01px;
 }
 
 .settingsButton {
@@ -73,6 +74,8 @@
   font-size: 25px;
   color: var(--color-foreground);
   font-weight: bold;
+  justify-content: left;
+  margin-left: 20px;
 }
 
 #settingsText {
@@ -80,6 +83,8 @@
   font-size: 20px;
   color: var(--color-foreground);
   font-weight: bold;
+  justify-content: left;
+  margin-left: 40px;
 }
 
 @keyframes flip {
