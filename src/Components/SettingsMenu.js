@@ -34,7 +34,6 @@ export const SettingsMenu = (props) => {
         <div id="settingsTitle">{Tanslations.settings[props.language]}</div>
         <div></div>
       </div>
-      <div></div>
       <div>
         <div id="settingsText">{Tanslations.language[props.language]}</div>
         <div>
@@ -141,6 +140,7 @@ export const SettingsMenu = (props) => {
         <div id="settingsText">Dark mode</div>
         <DarkModeToggle />
       </div>
+      <div></div>
     </div>
   );
 };

@@ -2,7 +2,7 @@
 .card-items-settings div {
   display: flex;
   flex: 1 1 160px;
-  border: 1px solid #8b72bb9e;
+  /*border: 1px solid #8b72bb9e;*/
   border-radius: 3px;
   justify-content: center;
   align-items: center;
@@ -21,7 +21,7 @@
 }
 
 .settingsButton {
-  background-color: #301c82;
+  background-color: var(--color-background);
   color: var(--color-foreground);
   padding: 0.5em 1em;
   display: flex;
