@@ -18,7 +18,6 @@ export const SettingsMenu = (props) => {
 
   const handleSoundsClick = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     props.setSounds(e.target.value);
   };
 

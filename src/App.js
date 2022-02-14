@@ -11,6 +11,7 @@ import { englishUpperWordList } from "./Data/EnglishWords.js";
 import { styles } from "./Data/AnimationStyles.js";
 import { Tanslations } from "./Data/Translations.js";
 import { useColorScheme } from "./Platform/ColorScheme.tsx";
+import { useLanguage } from "./Platform/PreferedLanguage.tsx";
 
 /*Sounds*/
 import pop from "./Sounds/pop.mp3";
@@ -20,6 +21,7 @@ import "./App.scss";
 function App() {
   //Detect witch color sceme has been selected
   useColorScheme();
+  const { language, setLanguage } = useLanguage();
   //There are 6 rows and 5 columns in the game
   const n = 5;
   const m = 6;
@@ -36,7 +38,7 @@ function App() {
   const [settingsShown, setSettingsShown] = useState(false);
   const [gameMenuShown, setGameMenuShown] = useState(true);
   /*Global settings */
-  const [language, setLanguage] = useState("en");
+  //const [language, setLanguage] = useState("en");
   const [level, setLevel] = useState("hard");
   const [sounds, setSounds] = useState("on");
   const [gameResult, setGameResult] = useState("");
@@ -65,14 +67,11 @@ function App() {
 
   //A function that starts a new game by initializing the game board
   const startNewGame = (language) => {
-    console.log("starting a new game");
-    console.log(language);
     //Starting a new game so the menu needs to be hiddens
     setGameMenuShown(false);
     //Inititalizing the game result
     setGameResult("");
     //Picks a random word as the answer for the current game
-    console.log("finding a new word");
     if (language === "is") {
       setAnswer(
         prettyUpperWordList[
@@ -97,19 +96,21 @@ function App() {
     setCurrentColumn(0);
 
     //Clean the styles
-    //Maybe we don't need this if we are going to remove the dom each time
-    //we show the game menu!
-    /*for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < 6; i++) {
       for (var j = 0; j < 5; j++) {
         let id = getRef(`${i}-${j}`);
-        //id.current.style = "";
+        if (id !== undefined) {
+          id.current.style = "";
+        }
       }
-    }*/
+    }
 
     //Clean the keyboard
     for (var key in LetterKeys) {
       let id2 = getRef(LetterKeys[key]);
-      id2.current.style = "";
+      if (id2 !== undefined) {
+        id2.current.style = "";
+      }
     }
   };
 
@@ -263,7 +264,6 @@ function App() {
   let settingsProps = {
     settingsShown,
     language,
-    setLanguage,
     level,
     setLevel,
     sounds,
