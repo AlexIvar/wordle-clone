@@ -1,4 +1,5 @@
 export const englishUpperWordList = [
+  "BILLS",
   "JAZZY",
   "FIZZY",
   "FUZZY",
@@ -1563,6 +1564,7 @@ export const englishUpperWordList = [
   "TATTY",
   "TEARY",
   "TEETH",
+  "TENTS",
   "TENTH",
   "TEPID",
   "TESTY",

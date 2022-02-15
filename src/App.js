@@ -42,16 +42,7 @@ function App() {
   const [level, setLevel] = useState("hard");
   const [sounds, setSounds] = useState("on");
   const [gameResult, setGameResult] = useState("");
-
-  const [answer, setAnswer] = useState(
-    language === "is"
-      ? prettyUpperWordList[
-          Math.floor(Math.random() * prettyUpperWordList.length)
-        ]
-      : englishUpperWordList[
-          Math.floor(Math.random() * englishUpperWordList.length)
-        ]
-  );
+  const [answer, setAnswer] = useState("");
 
   /*Sounds*/
   const [playbackRate, setPlaybackRate] = useState(0.8);
@@ -99,7 +90,7 @@ function App() {
     for (var i = 0; i < 6; i++) {
       for (var j = 0; j < 5; j++) {
         let id = getRef(`${i}-${j}`);
-        if (id !== undefined) {
+        if (id !== undefined && id.current != null) {
           id.current.style = "";
         }
       }
@@ -108,7 +99,7 @@ function App() {
     //Clean the keyboard
     for (var key in LetterKeys) {
       let id2 = getRef(LetterKeys[key]);
-      if (id2 !== undefined) {
+      if (id2 !== undefined && id2.current !== null) {
         id2.current.style = "";
       }
     }
@@ -131,43 +122,102 @@ function App() {
     startNewGame(language);
   };
 
+  //todo:"Hard mode (do not show in-word but only if correct position"
+
   //Function that goes through the current row and checks if the current guess is correct
   const checkIfWon = () => {
-    //make the answer into an array of letters
-    let answerArr = answer.split("");
     //initialize counter
     let counter = 0;
     //A way to delay the anymation for each column
     let arr = ["0", "0.2", "0.4", "0.6", "0.8"];
-    //check whole row
-    for (var i = 0; i < 5; i++) {
-      let currLetter = matrix[currentRow][i];
+
+    const resultTypes = {
+      CorrectPosition: "correct",
+      InWord: "in-word",
+      NotInWord: "not-in-word",
+    };
+
+    let letters = new Array(answer.length);
+    let remainingLetters = answer.split("");
+
+    // First we determine correctly positioned letters
+    for (var i = 0; i < answer.length; i++) {
+      let guessedLetter = matrix[currentRow][i];
+      let result = null;
+
       //Get the reference id of the current column
       let id = getRef(`${currentRow}-${i}`);
       //Get the reference id of the keyboard key
-      var id2 = getRef(LetterKeys[currLetter]);
+      var id2 = getRef(LetterKeys[guessedLetter]);
 
       //If the letter is on the right spot then colour it green
-      if (currLetter === answerArr[i]) {
+      if (guessedLetter === answer.charAt(i)) {
         id.current.style =
           styles.greenAnswer + " animation-delay:" + arr[i] + "s;";
         id2.current.style = styles.greenAnswer;
+
+        result = resultTypes.CorrectPosition;
+        remainingLetters[i] = null;
         counter++;
         //If the letter is in the word but not on the right spot
-      } else if (
-        currLetter !== answerArr[i] &&
-        answerArr.indexOf(matrix[currentRow][i]) > -1
-      ) {
-        id.current.style =
-          styles.yellowAnwer + " animation-delay:" + arr[i] + "s;";
-        id2.current.style = styles.yellowAnwer;
-        //The letter is not in the word
-      } else {
-        id.current.style =
-          styles.redAnswer + " animation-delay:" + arr[i] + "s;";
-        id2.current.style = styles.redAnswer;
+      }
+
+      letters[i] = {
+        value: guessedLetter,
+        result,
+      };
+    }
+    //if all letter are correct then there is no need to check the rest
+    if (counter < 5) {
+      // And then we consider letters that exist in the word, handling duplicates.
+      for (var i = 0; i < letters.length; i++) {
+        if (letters[i].result !== null) {
+          continue;
+        }
+
+        const guessedLetter = matrix[currentRow][i];
+        const index = remainingLetters.indexOf(guessedLetter);
+
+        //Get the reference id of the current column
+        let id = getRef(`${currentRow}-${i}`);
+        //Get the reference id of the keyboard key
+        var id2 = getRef(LetterKeys[guessedLetter]);
+        //If there is already the same letter with green color
+        //Then it will not be overwritten with red or yellow
+        let obj = letters.find(
+          (o) =>
+            o.value === guessedLetter &&
+            o.result === resultTypes.CorrectPosition
+        );
+
+        if (index !== -1) {
+          id.current.style =
+            styles.yellowAnwer + " animation-delay:" + arr[i] + "s;";
+
+          if (obj) {
+            id2.current.style = styles.greenAnswer;
+          } else {
+            id2.current.style = styles.yellowAnwer;
+          }
+
+          letters[i].result = resultTypes.InWord;
+          remainingLetters[index] = null;
+        } else {
+          id.current.style =
+            styles.redAnswer + " animation-delay:" + arr[i] + "s;";
+
+          letters[i].result = resultTypes.NotInWord;
+
+          if (obj) {
+            id2.current.style = styles.greenAnswer;
+          } else {
+            id2.current.style = styles.redAnswer;
+          }
+        }
       }
     }
+
+    console.log(letters);
 
     //the counter is 5 that means all letter are correct and the game has been won
     if (counter === 5 && currentRow <= 6) {
@@ -261,6 +311,7 @@ function App() {
   };
 
   /*Props*/
+  //Props for settings menu
   let settingsProps = {
     settingsShown,
     language,
@@ -269,11 +320,11 @@ function App() {
     sounds,
     setSounds,
   };
-
+  //Props for header
   let headerProps = {
     sounds,
   };
-
+  //Props for game menu
   let gameMenuProps = {
     settingsShown,
     answer,
