@@ -70,9 +70,13 @@ export const Tanslations = {
   startGame: {
     is: "Hefja leik!",
     en: "Start game!",
-    },
-    darkmode: {
-        is: "Dökk stilling",
-        en: "Dark mode"
-  }
+  },
+  darkmode: {
+    is: "Dökk stilling",
+    en: "Dark mode",
+  },
+  doesNotExistInWordList: {
+    is: "Því miður er orðið ekki til í listanum...",
+    en: "Sorry, the word does not exist in the wordlist...",
+  },
 };

@@ -12,6 +12,7 @@ import { styles } from "./Data/AnimationStyles.js";
 import { Tanslations } from "./Data/Translations.js";
 import { useColorScheme } from "./Platform/ColorScheme.tsx";
 import { useLanguage } from "./Platform/PreferedLanguage.tsx";
+import toast, { Toaster } from "react-hot-toast";
 
 /*Sounds*/
 import pop from "./Sounds/pop.mp3";
@@ -29,7 +30,6 @@ function App() {
   const [matrix, setMatrix] = useState(
     Array.from({ length: m }, () => Array.from({ length: n }, () => ""))
   );
-
   //Current row of guesses
   const [currentRow, setCurrentRow] = useState(0);
   //Current letter column
@@ -38,7 +38,6 @@ function App() {
   const [settingsShown, setSettingsShown] = useState(false);
   const [gameMenuShown, setGameMenuShown] = useState(true);
   /*Global settings */
-  //const [language, setLanguage] = useState("en");
   const [level, setLevel] = useState("hard");
   const [sounds, setSounds] = useState("on");
   const [gameResult, setGameResult] = useState("");
@@ -56,36 +55,13 @@ function App() {
     setSettingsShown(!settingsShown);
   };
 
-  //A function that starts a new game by initializing the game board
-  const startNewGame = (language) => {
-    //Starting a new game so the menu needs to be hiddens
-    setGameMenuShown(false);
-    //Inititalizing the game result
-    setGameResult("");
-    //Picks a random word as the answer for the current game
-    if (language === "is") {
-      setAnswer(
-        prettyUpperWordList[
-          Math.floor(Math.random() * prettyUpperWordList.length)
-        ]
-      );
-    } else {
-      if (language === "en") {
-        setAnswer(
-          englishUpperWordList[
-            Math.floor(Math.random() * englishUpperWordList.length)
-          ]
-        );
-      }
-    }
-    //Empty the current board
-    setMatrix(
-      Array.from({ length: m }, () => Array.from({ length: n }, () => ""))
-    );
-    //Set the current row and column to the first row and column of the new board
-    setCurrentRow(0);
-    setCurrentColumn(0);
+  function createAnswer(language) {
+    var db = language === "is" ? prettyUpperWordList : englishUpperWordList;
+    setAnswer(db[Math.floor(Math.random() * db.length)]);
+  }
 
+  //cleans the current style in the game board
+  function cleanBoard() {
     //Clean the styles
     for (var i = 0; i < 6; i++) {
       for (var j = 0; j < 5; j++) {
@@ -95,7 +71,10 @@ function App() {
         }
       }
     }
+  }
 
+  //Clean the styles on the keyboard
+  function cleanKeyboard() {
     //Clean the keyboard
     for (var key in LetterKeys) {
       let id2 = getRef(LetterKeys[key]);
@@ -103,6 +82,26 @@ function App() {
         id2.current.style = "";
       }
     }
+  }
+
+  //A function that starts a new game by initializing the game board
+  const startNewGame = (language) => {
+    //Starting a new game so the menu needs to be hiddens
+    setGameMenuShown(false);
+    //Inititalizing the game result
+    setGameResult("");
+    //Picks a random word as the answer for the current game
+    createAnswer(language);
+    //Empty the current board
+    setMatrix(
+      Array.from({ length: m }, () => Array.from({ length: n }, () => ""))
+    );
+    //Set the current row and column to the first row and column of the new board
+    setCurrentRow(0);
+    setCurrentColumn(0);
+
+    cleanBoard();
+    cleanKeyboard();
   };
 
   //Simple function that starts a new game
@@ -124,12 +123,69 @@ function App() {
 
   //todo:"Hard mode (do not show in-word but only if correct position"
 
+  //Sets the correct style to the letter block
+  function setColumnColorStyles(column, color) {
+    //A way to delay the anymation for each column
+    let arr = ["0", "0.2", "0.4", "0.6", "0.8"];
+
+    //Get the reference id of the current column
+    let columnId = getRef(`${currentRow}-${column}`);
+
+    switch (color) {
+      case "green":
+        columnId.current.style =
+          styles.greenAnswer + " animation-delay:" + arr[column] + "s;";
+        break;
+      case "yellow":
+        columnId.current.style =
+          styles.yellowAnwer + " animation-delay:" + arr[column] + "s;";
+        break;
+      case "red":
+        columnId.current.style =
+          styles.redAnswer + " animation-delay:" + arr[column] + "s;";
+
+      default:
+        break;
+    }
+  }
+
+  //Sets the correct style for a keyboard key
+  function setKeyColorStyles(letter, color, exists) {
+    //Get the reference id of the keyboard key
+    var keyId = getRef(LetterKeys[letter]);
+
+    if (exists) {
+      keyId.current.style = styles.greenAnswer;
+      return;
+    }
+
+    switch (color) {
+      case "green":
+        keyId.current.style = styles.greenAnswer;
+        break;
+      case "yellow":
+        keyId.current.style = styles.yellowAnwer;
+        break;
+      case "red":
+        keyId.current.style = styles.redAnswer;
+
+      default:
+        break;
+    }
+  }
+
+  //Determines if a previous letter has already been correct previously
+  function isLetterInCorrectPos(letters, guessedLetter, resultTypes) {
+    return letters.find(
+      (o) =>
+        o.value === guessedLetter && o.result === resultTypes.CorrectPosition
+    );
+  }
+
   //Function that goes through the current row and checks if the current guess is correct
   const checkIfWon = () => {
     //initialize counter
     let counter = 0;
-    //A way to delay the anymation for each column
-    let arr = ["0", "0.2", "0.4", "0.6", "0.8"];
 
     const resultTypes = {
       CorrectPosition: "correct",
@@ -145,16 +201,10 @@ function App() {
       let guessedLetter = matrix[currentRow][i];
       let result = null;
 
-      //Get the reference id of the current column
-      let id = getRef(`${currentRow}-${i}`);
-      //Get the reference id of the keyboard key
-      var id2 = getRef(LetterKeys[guessedLetter]);
-
       //If the letter is on the right spot then colour it green
       if (guessedLetter === answer.charAt(i)) {
-        id.current.style =
-          styles.greenAnswer + " animation-delay:" + arr[i] + "s;";
-        id2.current.style = styles.greenAnswer;
+        setColumnColorStyles(i, "green");
+        setKeyColorStyles(guessedLetter, "green", false);
 
         result = resultTypes.CorrectPosition;
         remainingLetters[i] = null;
@@ -178,46 +228,23 @@ function App() {
         const guessedLetter = matrix[currentRow][i];
         const index = remainingLetters.indexOf(guessedLetter);
 
-        //Get the reference id of the current column
-        let id = getRef(`${currentRow}-${i}`);
-        //Get the reference id of the keyboard key
-        var id2 = getRef(LetterKeys[guessedLetter]);
         //If there is already the same letter with green color
         //Then it will not be overwritten with red or yellow
-        let obj = letters.find(
-          (o) =>
-            o.value === guessedLetter &&
-            o.result === resultTypes.CorrectPosition
-        );
+        let correct = isLetterInCorrectPos(letters, guessedLetter, resultTypes);
 
         if (index !== -1) {
-          id.current.style =
-            styles.yellowAnwer + " animation-delay:" + arr[i] + "s;";
-
-          if (obj) {
-            id2.current.style = styles.greenAnswer;
-          } else {
-            id2.current.style = styles.yellowAnwer;
-          }
+          setColumnColorStyles(i, "yellow");
+          setKeyColorStyles(guessedLetter, "yellow", correct);
 
           letters[i].result = resultTypes.InWord;
           remainingLetters[index] = null;
         } else {
-          id.current.style =
-            styles.redAnswer + " animation-delay:" + arr[i] + "s;";
-
+          setColumnColorStyles(i, "red");
+          setKeyColorStyles(guessedLetter, "red", correct);
           letters[i].result = resultTypes.NotInWord;
-
-          if (obj) {
-            id2.current.style = styles.greenAnswer;
-          } else {
-            id2.current.style = styles.redAnswer;
-          }
         }
       }
     }
-
-    console.log(letters);
 
     //the counter is 5 that means all letter are correct and the game has been won
     if (counter === 5 && currentRow <= 6) {
@@ -232,6 +259,12 @@ function App() {
       setCurrentRow((prevRow) => prevRow + 1);
     }
   };
+
+  //Function that checks if the current word exists in the word list
+  function guessIsAWord(guess) {
+    var db = language === "is" ? prettyUpperWordList : englishUpperWordList;
+    return db.indexOf(guess) === -1;
+  }
 
   //This function is called each time a letter is entered
   const handleChange = (letter) => {
@@ -255,16 +288,8 @@ function App() {
           //Current guess
           let currentGuess = matrix[currentRow].join("");
           //Check if guess exists in the wordList array
-          if (
-            language === "is" &&
-            prettyUpperWordList.indexOf(currentGuess) === -1
-          ) {
-            alert("Orðið er ekki til í orðalistanum:(");
-          } else if (
-            language === "en" &&
-            englishUpperWordList.indexOf(currentGuess) === -1
-          ) {
-            alert("The word does not exist in the word list");
+          if (guessIsAWord(currentGuess)) {
+            alert(Tanslations.doesNotExistInWordList[language]);
           } else {
             //The word exists in the word list so check if the guess is correct
             checkIfWon();
@@ -291,7 +316,10 @@ function App() {
             setCurrentColumn(0);
             setMatrix(copy);
             let firstColumnRefId = getRef(`${currentRow}-${currentColum}`);
-            if (firstColumnRefId.current !== null) {
+            if (
+              firstColumnRefId !== undefined &&
+              firstColumnRefId.current !== null
+            ) {
               firstColumnRefId.current.style = "";
             }
           }
@@ -300,7 +328,10 @@ function App() {
           copy[currentRow][currentColum] = letter;
           setMatrix(copy);
           let currentColumnRefId = getRef(`${currentRow}-${currentColum}`);
-          if (currentColumnRefId.current !== null) {
+          if (
+            currentColumnRefId !== undefined &&
+            currentColumnRefId.current !== null
+          ) {
             currentColumnRefId.current.style = styles.letterPopIn;
           }
           //new column
@@ -363,7 +394,6 @@ function App() {
               onLanguageChange={handleLanguageChange}
             />
           )}
-
           <Keyboard onChange={handleChange} />
         </div>
       </div>
