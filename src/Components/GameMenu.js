@@ -40,7 +40,6 @@ export const GameMenu = (props) => {
           </div>
         </>
       )}
-      <div></div>
       <div>
         <div>
           <button
@@ -51,7 +50,6 @@ export const GameMenu = (props) => {
           </button>
         </div>
       </div>
-      <div></div>
       <div></div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Styles/Header.css";
+import "../Styles/Header.scss";
 import { FiSettings } from "react-icons/fi";
 import { FaTimes } from "react-icons/fa";
 import pop from "../Sounds/swoosh.mp3";
@@ -32,10 +32,8 @@ export const Header = (props) => {
         Pipers dream<span id="dot">.</span>
       </h2>
       <div className="settings-button" onClick={handleSettingsClick}>
-        <span className="logo">
-          {!spin && <FiSettings style={!spin && settingsSpin} />}
-          {spin && <FaTimes style={spin && settingsSpin} />}
-        </span>
+        {!spin && <FiSettings style={!spin && settingsSpin} />}
+        {spin && <FaTimes style={spin && settingsSpin} />}
       </div>
     </div>
   );

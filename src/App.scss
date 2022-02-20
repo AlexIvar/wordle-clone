@@ -1,75 +1,93 @@
 body {
   --color-background: #301c82;
   --color-foreground: #efefef;
-  --color-key-border:#efefef;
+  --color-key-border: #efefef;
 
   &.dark {
     --color-background: #010527;
     --color-foreground: #efefef;
-    --color-key-border:#8b72bb9e;
+    --color-key-border: #8b72bb9e;
   }
 
   &.light {
     --color-background: #301c82;
     --color-foreground: #efefef;
   }
-
   background-color: var(--color-background);
 }
 
 .App {
-  text-align: center;
+  /*text-align: center;
   display: flex;
   height: 200vh;
   align-items: center;
-  flex-direction: column;
-}
-
-.App h2 {
+  flex-direction: column;*/
+  padding: 10px 0;
+  margin: 0 auto;
+  max-width: 500px;
+  min-height: 100vh;
+  box-sizing: border-box;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: unset;
 }
 
-.card-container {
+#card-row {
+  display: flex;
+  flex-direction: row;
+}
+
+/*.card-container {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /*height: 50vh;*/
   width: 100%;
-}
+}*/
+
 .card-item {
-  box-sizing: border-box;
+  /*box-sizing: border-box;
   border: 1px solid var(--color-background);
   border-radius: 5px;
-  width: 400px;
-  /*height: 410px;*/
+  max-width: 400px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
   opacity: 1;
-  padding-bottom: 18.13px;
+  padding-bottom: 18.13px;*/
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
 }
 
-.card-item div {
-  display: flex;
+#card-row div {
+  /*display: flex;
   flex: 1 1 160px;
-  border: 3px solid #8b72bb9e; /*#8b72bb;*/
+  border: 3px solid #8b72bb9e;
   border-radius: 3px;
   justify-content: center;
   align-items: center;
   margin: 2px;
-  /*background-color: #9e90d5;*/
-  height: 70px;
-}
+  min-height: 4em;*/
 
-.card-item div p {
+  display: block;
+  border: 3px solid #8b72bb9e;
+  margin: 1.5px;
+  box-sizing: border-box;
+  text-align: center;
+  width: var(--letter-size);
+  height: var(--letter-size);
+  line-height: var(--letter-size);
   font-family: "Poppins", sans-serif;
-  font-size: 25px;
+  font-size: calc(var(--letter-size) * 0.4);
   color: #eeeeee;
   font-weight: bold;
+  min-width: 50px;
+  min-height: 50px;
 }
 
 .show {
@@ -81,7 +99,9 @@ body {
 
 .hide {
   opacity: 0;
-  margin-right: -400px;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
   /*The z-index property specifies the stack order of an element. 
     An element with greater stack order is always in front of an element with a lower stack order.*/
   z-index: -1;

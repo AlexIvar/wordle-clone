@@ -12,6 +12,7 @@ import { styles } from "./Data/AnimationStyles.js";
 import { Tanslations } from "./Data/Translations.js";
 import { useColorScheme } from "./Platform/ColorScheme.tsx";
 import { useLanguage } from "./Platform/PreferedLanguage.tsx";
+import { useWindowDimensions } from "./Platform/useWindowDimensions.js";
 import toast, { Toaster } from "react-hot-toast";
 
 /*Sounds*/
@@ -30,6 +31,7 @@ function App() {
   const [matrix, setMatrix] = useState(
     Array.from({ length: m }, () => Array.from({ length: n }, () => ""))
   );
+
   //Current row of guesses
   const [currentRow, setCurrentRow] = useState(0);
   //Current letter column
@@ -42,6 +44,8 @@ function App() {
   const [sounds, setSounds] = useState("on");
   const [gameResult, setGameResult] = useState("");
   const [answer, setAnswer] = useState("");
+
+  const { height, width } = useWindowDimensions();
 
   /*Sounds*/
   const [playbackRate, setPlaybackRate] = useState(0.8);
@@ -367,35 +371,48 @@ function App() {
     <>
       <div className="App">
         <Header onSettingsClicked={toggleSettings} {...headerProps} />
-        <div className="card-container">
-          {gameMenuShown && (
-            <GameMenu {...gameMenuProps} onStartNewGame={handleStartNewGame} />
-          )}
-          {!gameMenuShown && (
-            <div
-              className={settingsShown ? "card-item hide" : "card-item show"}
-            >
-              {Object.keys(matrix).map((keyOuter) => {
-                return Object.keys(matrix[keyOuter]).map((keyInner) => {
-                  return (
-                    <Card
-                      key={`${keyInner}-${keyOuter}`}
-                      innerRef={setRef(`${keyOuter}-${keyInner}`)}
-                      letter={matrix[keyOuter][keyInner]}
-                    />
-                  );
-                });
-              })}
-            </div>
-          )}
-          {settingsShown && (
-            <SettingsMenu
-              {...settingsProps}
-              onLanguageChange={handleLanguageChange}
-            />
-          )}
-          <Keyboard onChange={handleChange} />
-        </div>
+        {/*<div className="card-container">*/}
+        {gameMenuShown && (
+          <GameMenu {...gameMenuProps} onStartNewGame={handleStartNewGame} />
+        )}
+        {!gameMenuShown && (
+          <div
+            className={settingsShown ? "card-item hide" : "card-item show"}
+            style={{
+              "--letter-size": `${
+                (height <= width ? (height / 8) * 0.75 : width / 8) * 0.9
+              }px`,
+            }}
+          >
+            {Object.keys(matrix).map((keyOuter) => {
+              return (
+                <div id="card-row" key={keyOuter}>
+                  {Object.keys(matrix[keyOuter]).map((keyInner) => {
+                    return (
+                      <>
+                        {console.log(height)}
+                        <Card
+                          key={`${keyInner}-${keyOuter}`}
+                          innerRef={setRef(`${keyOuter}-${keyInner}`)}
+                          letter={matrix[keyOuter][keyInner]}
+                          {...{ keyOuter, keyInner }}
+                        />
+                      </>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        )}
+        {settingsShown && (
+          <SettingsMenu
+            {...settingsProps}
+            onLanguageChange={handleLanguageChange}
+          />
+        )}
+
+        <Keyboard onChange={handleChange} />
       </div>
     </>
   );

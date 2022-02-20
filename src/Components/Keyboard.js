@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useDynamicRefs from "use-dynamic-refs";
 import { FiDelete } from "react-icons/fi";
 import { AiOutlineEnter } from "react-icons/ai";
-import "../Styles/Keyboard.css";
+import "../Styles/Keyboard.scss";
 
 export const Keyboard = (props) => {
   const [getRef, setRef] = useDynamicRefs();
@@ -48,8 +48,8 @@ export const Keyboard = (props) => {
   }, [comma]);
 
   return (
-    <div className="key-container">
-      <div className="key-item">
+    <div className="key-item">
+      <div id="key-row">
         <div ref={setRef(81)} onClick={() => props.onChange("Q")}>
           Q
         </div>
@@ -83,6 +83,8 @@ export const Keyboard = (props) => {
         <div ref={setRef(8)} onClick={() => props.onChange("DEL")}>
           <FiDelete />
         </div>
+      </div>
+      <div id="key-row">
         <div ref={setRef(65)} onClick={() => props.onChange("A")}>
           A
         </div>
@@ -116,6 +118,8 @@ export const Keyboard = (props) => {
         <div ref={setRef(13)} onClick={() => props.onChange("EN")}>
           <AiOutlineEnter />
         </div>
+      </div>
+      <div id="key-row">
         <div></div>
         <div></div>
         <div ref={setRef(90)} onClick={() => props.onChange("Z")}>
@@ -141,6 +145,8 @@ export const Keyboard = (props) => {
         </div>
         <div></div>
         <div></div>
+      </div>
+      <div id="key-row">
         <div></div>
         <div ref={setRef(287)} onClick={() => props.onChange("Á")}>
           Á

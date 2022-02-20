@@ -2,6 +2,8 @@ import React from "react";
 import { Tanslations } from "../Data/Translations.js";
 import DarkModeToggle from "../Components/DarkModeToggle";
 import "../Styles/SettingsMenu.css";
+import { useWindowDimensions } from "../Platform/useWindowDimensions.js"
+
 
 /*import { HiOutlineVolumeOff, HiOutlineVolumeUp } from "react-icons/hi";*/
 
@@ -20,14 +22,23 @@ export const SettingsMenu = (props) => {
     e.preventDefault();
     props.setSounds(e.target.value);
   };
+    
 
-  return (
+const { height, width } = useWindowDimensions();
+
+    return (
+      
     <div
       className={
         props.settingsShown
           ? "card-items-settings showSettings"
           : "card-items-settings hideSettings"
       }
+      style={{
+        "--letter-size": `${
+          (height <= width ? (height / 9) * 0.75 : width / 9) * 0.9
+        }px`,
+      }}
     >
       <div>
         <div id="settingsTitle">{Tanslations.settings[props.language]}</div>
@@ -138,9 +149,6 @@ export const SettingsMenu = (props) => {
         <div id="settingsText">{Tanslations.darkmode[props.language]}</div>
         <DarkModeToggle sounds={props.sounds} />
       </div>
-      <div></div>
-
-      <div></div>
     </div>
   );
 };
