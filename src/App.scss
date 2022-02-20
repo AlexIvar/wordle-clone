@@ -2,11 +2,13 @@ body {
   --color-background: #301c82;
   --color-foreground: #efefef;
   --color-key-border: #efefef;
+  --color-keyboard-background: #8b72bb9e;
 
   &.dark {
     --color-background: #010527;
     --color-foreground: #efefef;
     --color-key-border: #8b72bb9e;
+    --color-keyboard-background:#2b2754;
   }
 
   &.light {
