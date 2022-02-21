@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import Card from "./Components/Card.js";
 import Keyboard from "./Components/Keyboard.js";
 import Header from "./Components/Header.js";
@@ -12,9 +12,8 @@ import { styles } from "./Data/AnimationStyles.js";
 import { Tanslations } from "./Data/Translations.js";
 import { useColorScheme } from "./Platform/ColorScheme.tsx";
 import { useLanguage } from "./Platform/PreferedLanguage.tsx";
-import { useDifficulty } from "./Platform/PreferedDifficulty.tsx"
+import { useDifficulty } from "./Platform/PreferedDifficulty.tsx";
 import { useWindowDimensions } from "./Platform/useWindowDimensions.js";
-import toast, { Toaster } from "react-hot-toast";
 
 /*Sounds*/
 import pop from "./Sounds/pop.mp3";
@@ -128,7 +127,7 @@ function App() {
 
   const handleDifficultyChange = (diffculty) => {
     setDifficulty(diffculty);
-  }
+  };
 
   //todo:"Hard mode (do not show in-word but only if correct position"
 
@@ -152,7 +151,7 @@ function App() {
       case "red":
         columnId.current.style =
           styles.redAnswer + " animation-delay:" + arr[column] + "s;";
-
+        break;
       default:
         break;
     }
@@ -177,7 +176,7 @@ function App() {
         break;
       case "red":
         keyId.current.style = styles.redAnswer;
-
+        break;
       default:
         break;
     }
@@ -229,12 +228,12 @@ function App() {
     //if all letter are correct then there is no need to check the rest
     if (counter < 5 && difficulty === "easy") {
       // And then we consider letters that exist in the word, handling duplicates.
-      for (var i = 0; i < letters.length; i++) {
-        if (letters[i].result !== null) {
+      for (var j = 0; j < letters.length; j++) {
+        if (letters[j].result !== null) {
           continue;
         }
 
-        const guessedLetter = matrix[currentRow][i];
+        const guessedLetter = matrix[currentRow][j];
         const index = remainingLetters.indexOf(guessedLetter);
 
         //If there is already the same letter with green color
@@ -242,15 +241,15 @@ function App() {
         let correct = isLetterInCorrectPos(letters, guessedLetter, resultTypes);
 
         if (index !== -1) {
-          setColumnColorStyles(i, "yellow");
+          setColumnColorStyles(j, "yellow");
           setKeyColorStyles(guessedLetter, "yellow", correct);
 
-          letters[i].result = resultTypes.InWord;
+          letters[j].result = resultTypes.InWord;
           remainingLetters[index] = null;
         } else {
-          setColumnColorStyles(i, "red");
+          setColumnColorStyles(j, "red");
           setKeyColorStyles(guessedLetter, "red", correct);
-          letters[i].result = resultTypes.NotInWord;
+          letters[j].result = resultTypes.NotInWord;
         }
       }
     }
@@ -284,9 +283,6 @@ function App() {
     //Don't allow keyboard inputs while user is adjusting settings
     if (!settingsShown) {
       if (!(currentColum === 5 && letter !== "EN" && letter !== "DEL")) {
-        //Login answer for development...
-        console.log(answer);
-
         //Don't allow to press anything but enter or delete on the last column
         if (currentColum < 5 && letter === "EN") {
           var enterRefId = getRef(LetterKeys[letter]);
@@ -387,21 +383,19 @@ function App() {
                 (height <= width ? (height / 8) * 0.75 : width / 8) * 0.85
               }px`,
             }}
+            key={"123"}
           >
             {Object.keys(matrix).map((keyOuter) => {
               return (
                 <div id="card-row" key={keyOuter}>
                   {Object.keys(matrix[keyOuter]).map((keyInner) => {
                     return (
-                      <>
-                        {console.log(height)}
-                        <Card
-                          key={`${keyInner}-${keyOuter}`}
-                          innerRef={setRef(`${keyOuter}-${keyInner}`)}
-                          letter={matrix[keyOuter][keyInner]}
-                          {...{ keyOuter, keyInner }}
-                        />
-                      </>
+                      <Card
+                        key={`${keyInner}-${keyOuter}`}
+                        innerRef={setRef(`${keyOuter}-${keyInner}`)}
+                        letter={matrix[keyOuter][keyInner]}
+                        {...{ keyOuter, keyInner }}
+                      />
                     );
                   })}
                 </div>

@@ -20,7 +20,6 @@ export function useColorScheme(): {
     [isDark, systemPrefersDark]
   );
   useEffect(() => {
-    console.log(value)
     if (value === "dark") {
       document.body.classList.add("dark");
     } else {

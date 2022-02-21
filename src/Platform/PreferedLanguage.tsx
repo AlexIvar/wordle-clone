@@ -1,5 +1,4 @@
-import { useEffect, useMemo } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMemo } from "react";
 import createPersistedState from "use-persisted-state";
 
 const useLanguageState = createPersistedState("language");
@@ -15,9 +14,7 @@ export function useLanguage(): {
     () => (language === undefined ? icelandicLanguage : language),
     [language, icelandicLanguage]
   );
-  /*useEffect(() => {
-    console.log(value);
-  }, [value]);*/
+    
   return {
     language: value,
     setLanguage,
