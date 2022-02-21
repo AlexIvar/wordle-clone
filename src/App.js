@@ -287,6 +287,14 @@ function App() {
         if (currentColum < 5 && letter === "EN") {
           var enterRefId = getRef(LetterKeys[letter]);
           enterRefId.current.style = styles.keyShake;
+          setTimeout(function () {
+            if (
+              enterRefId !== undefined &&
+              enterRefId.current !== null
+            ) {
+              enterRefId.current.style = "";
+            }
+          }, 1000);
         }
         //User is submitting the answer
         else if (currentColum === 5 && letter === "EN") {
@@ -312,7 +320,10 @@ function App() {
             let currentColumnRefId = getRef(
               `${currentRow}-${currentColum - 1}`
             );
-            if (currentColumnRefId.current !== null) {
+            if (
+              currentColumnRefId !== undefined &&
+              currentColumnRefId.current !== null
+            ) {
               currentColumnRefId.current.style = "";
             }
           } else if (currentColum === 0) {
