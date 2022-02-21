@@ -12,6 +12,7 @@ import { styles } from "./Data/AnimationStyles.js";
 import { Tanslations } from "./Data/Translations.js";
 import { useColorScheme } from "./Platform/ColorScheme.tsx";
 import { useLanguage } from "./Platform/PreferedLanguage.tsx";
+import { useDifficulty } from "./Platform/PreferedDifficulty.tsx"
 import { useWindowDimensions } from "./Platform/useWindowDimensions.js";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -24,6 +25,7 @@ function App() {
   //Detect witch color sceme has been selected
   useColorScheme();
   const { language, setLanguage } = useLanguage();
+  const { difficulty, setDifficulty } = useDifficulty();
   //There are 6 rows and 5 columns in the game
   const n = 5;
   const m = 6;
@@ -40,7 +42,6 @@ function App() {
   const [settingsShown, setSettingsShown] = useState(false);
   const [gameMenuShown, setGameMenuShown] = useState(true);
   /*Global settings */
-  const [level, setLevel] = useState("hard");
   const [sounds, setSounds] = useState("on");
   const [gameResult, setGameResult] = useState("");
   const [answer, setAnswer] = useState("");
@@ -124,6 +125,10 @@ function App() {
     setLanguage(language);
     startNewGame(language);
   };
+
+  const handleDifficultyChange = (diffculty) => {
+    setDifficulty(diffculty);
+  }
 
   //todo:"Hard mode (do not show in-word but only if correct position"
 
@@ -222,7 +227,7 @@ function App() {
       };
     }
     //if all letter are correct then there is no need to check the rest
-    if (counter < 5) {
+    if (counter < 5 && difficulty === "easy") {
       // And then we consider letters that exist in the word, handling duplicates.
       for (var i = 0; i < letters.length; i++) {
         if (letters[i].result !== null) {
@@ -350,9 +355,8 @@ function App() {
   let settingsProps = {
     settingsShown,
     language,
-    level,
-    setLevel,
     sounds,
+    difficulty,
     setSounds,
   };
   //Props for header
@@ -409,6 +413,7 @@ function App() {
           <SettingsMenu
             {...settingsProps}
             onLanguageChange={handleLanguageChange}
+            onDifficultyChange={handleDifficultyChange}
           />
         )}
 

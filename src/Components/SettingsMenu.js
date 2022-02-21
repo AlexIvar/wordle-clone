@@ -14,8 +14,8 @@ export const SettingsMenu = (props) => {
   };
 
   const handleDifficultyClick = (e) => {
-    e.preventDefault();
-    props.setLevel(e.target.value);
+      e.preventDefault();
+      props.onDifficultyChange(e.target.value);
   };
 
   const handleSoundsClick = (e) => {
@@ -84,7 +84,7 @@ const { height, width } = useWindowDimensions();
             <div>
               <button
                 className={
-                  props.level === "easy"
+                  props.difficulty === "easy"
                     ? "settingsButton selected"
                     : "settingsButton"
                 }
@@ -97,7 +97,7 @@ const { height, width } = useWindowDimensions();
             <div>
               <button
                 className={
-                  props.level === "hard"
+                  props.difficulty === "hard"
                     ? "settingsButton selected"
                     : "settingsButton"
                 }
