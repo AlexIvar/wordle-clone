@@ -380,7 +380,7 @@ function App() {
             className={settingsShown ? "card-item hide" : "card-item show"}
             style={{
               "--letter-size": `${
-                (height <= width ? (height / 8) * 0.75 : width / 8) * 0.9
+                (height <= width ? (height / 8) * 0.75 : width / 8) * 0.85
               }px`,
             }}
           >
