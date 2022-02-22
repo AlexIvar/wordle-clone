@@ -2,18 +2,20 @@ import React, { useEffect, useState } from "react";
 import useDynamicRefs from "use-dynamic-refs";
 import { FiDelete } from "react-icons/fi";
 import { AiOutlineEnter } from "react-icons/ai";
+/*Sounds*/
 import "../Styles/Keyboard.scss";
 
 export const Keyboard = (props) => {
   const [getRef, setRef] = useDynamicRefs();
   const [comma, setComma] = useState(false);
 
+
   //These letters can have commas
   const specialLetters = [65, 69, 73, 79, 85, 89, 222];
   useEffect(() => {
     function handleKeyDown(e) {
       e.preventDefault();
-    
+
       //Check if comma was pressed
       if (e.keyCode === 222) {
         setComma((state) => true);

@@ -52,11 +52,13 @@ body {
   text-align: center;
   width: var(--letter-size);
   height: var(--letter-size);
-  line-height: var(--letter-size);
   font-family: "Poppins", sans-serif;
   font-size: calc(var(--letter-size) * 0.4);
   color: #eeeeee;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .show {

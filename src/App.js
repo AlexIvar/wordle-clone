@@ -14,10 +14,9 @@ import { useColorScheme } from "./Platform/ColorScheme.tsx";
 import { useLanguage } from "./Platform/PreferedLanguage.tsx";
 import { useDifficulty } from "./Platform/PreferedDifficulty.tsx";
 import { useWindowDimensions } from "./Platform/useWindowDimensions.js";
-
-/*Sounds*/
 import pop from "./Sounds/pop.mp3";
 import useSound from "use-sound";
+
 import "./App.scss";
 
 function App() {
@@ -131,11 +130,11 @@ function App() {
 
   //Function that return the height and width of a letter container according to the height and width og the display
   const handleLetterSize = () => {
-    let size = (height <= width ? (height / 8) * 0.75 : width / 8) * 0.85 
+    let size = (height <= width ? (height / 8) * 0.75 : width / 8) * 0.85;
     if (size > 70) return 70;
     if (size < 50) return 50;
     return size;
-  }
+  };
 
   //todo:"Hard mode (do not show in-word but only if correct position"
 
@@ -285,7 +284,7 @@ function App() {
   //This function is called each time a letter is entered
   const handleChange = (letter) => {
     //Play a pop sound each time a key is selected
-    setPlaybackRate(playbackRate);
+    setPlaybackRate(0.8);
     play();
 
     //Don't allow keyboard inputs while user is adjusting settings
@@ -296,10 +295,7 @@ function App() {
           var enterRefId = getRef(LetterKeys[letter]);
           enterRefId.current.style = styles.keyShake;
           setTimeout(function () {
-            if (
-              enterRefId !== undefined &&
-              enterRefId.current !== null
-            ) {
+            if (enterRefId !== undefined && enterRefId.current !== null) {
               enterRefId.current.style = "";
             }
           }, 1000);
@@ -386,6 +382,10 @@ function App() {
     language,
   };
 
+  let keyboardProps = {
+    sounds,
+  };
+
   return (
     <>
       <div className="App">
@@ -397,8 +397,7 @@ function App() {
           <div
             className={settingsShown ? "card-item hide" : "card-item show"}
             style={{
-              "--letter-size": `${ handleLetterSize()
-              }px`,
+              "--letter-size": `${handleLetterSize()}px`,
             }}
           >
             {Object.keys(matrix).map((keyOuter) => {
@@ -427,7 +426,7 @@ function App() {
           />
         )}
 
-        <Keyboard onChange={handleChange} />
+        <Keyboard onChange={handleChange} {...keyboardProps} />
       </div>
     </>
   );
