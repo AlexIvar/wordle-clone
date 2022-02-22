@@ -39,25 +39,6 @@
   }
 }
 
-/*.key-item div {
-  display: flex;
-  flex: 1 1 160px;
-  border: 1px solid var(--color-key-border);
-  border-radius: 5px;
-  justify-content: center;
-  align-items: center;
-  margin: 2px;
-  color: var(--color-foreground);
-  min-height: 50px;
-}*/
-
 #key-row div:hover {
-  /*border: 1px solid rgb(36, 74, 245);*/
-  /*background-color: #6852a6;
-  color: var(--color-foreground);*/
   cursor: pointer;
-}
-
-#enterButton {
-  width: 670px;
 }

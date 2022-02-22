@@ -129,6 +129,14 @@ function App() {
     setDifficulty(diffculty);
   };
 
+  //Function that return the height and width of a letter container according to the height and width og the display
+  const handleLetterSize = () => {
+    let size = (height <= width ? (height / 8) * 0.75 : width / 8) * 0.85 
+    if (size > 70) return 70;
+    if (size < 50) return 50;
+    return size;
+  }
+
   //todo:"Hard mode (do not show in-word but only if correct position"
 
   //Sets the correct style to the letter block
@@ -382,7 +390,6 @@ function App() {
     <>
       <div className="App">
         <Header onSettingsClicked={toggleSettings} {...headerProps} />
-        {/*<div className="card-container">*/}
         {gameMenuShown && (
           <GameMenu {...gameMenuProps} onStartNewGame={handleStartNewGame} />
         )}
@@ -390,11 +397,9 @@ function App() {
           <div
             className={settingsShown ? "card-item hide" : "card-item show"}
             style={{
-              "--letter-size": `${
-                (height <= width ? (height / 8) * 0.75 : width / 8) * 0.85
+              "--letter-size": `${ handleLetterSize()
               }px`,
             }}
-            key={"123"}
           >
             {Object.keys(matrix).map((keyOuter) => {
               return (

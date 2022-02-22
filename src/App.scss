@@ -19,11 +19,6 @@ body {
 }
 
 .App {
-  /*text-align: center;
-  display: flex;
-  height: 200vh;
-  align-items: center;
-  flex-direction: column;*/
   padding: 10px 0;
   margin: 0 auto;
   max-width: 500px;
@@ -40,24 +35,7 @@ body {
   flex-direction: row;
 }
 
-/*.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}*/
-
 .card-item {
-  /*box-sizing: border-box;
-  border: 1px solid var(--color-background);
-  border-radius: 5px;
-  max-width: 400px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-  opacity: 1;
-  padding-bottom: 18.13px;*/
   display: flex;
   flex-grow: 1;
   flex-direction: column;
@@ -67,15 +45,6 @@ body {
 }
 
 #card-row div {
-  /*display: flex;
-  flex: 1 1 160px;
-  border: 3px solid #8b72bb9e;
-  border-radius: 3px;
-  justify-content: center;
-  align-items: center;
-  margin: 2px;
-  min-height: 4em;*/
-
   display: block;
   border: 3px solid #8b72bb9e;
   margin: 1.5px;
@@ -88,14 +57,12 @@ body {
   font-size: calc(var(--letter-size) * 0.4);
   color: #eeeeee;
   font-weight: bold;
-  min-width: 50px;
-  min-height: 50px;
 }
 
 .show {
   opacity: 1;
   margin-left: 0;
-  animation: flip 0.4s backwards linear;
+  animation: fadeIn 0.4s backwards linear;
   z-index: 0;
 }
 
@@ -143,6 +110,11 @@ body {
   to {
     transform: perspective(600px) rotateX(-360deg);
   }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
 }
 
 @keyframes shake {

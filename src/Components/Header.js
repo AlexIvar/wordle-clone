@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../Styles/Header.scss";
 import { FiSettings } from "react-icons/fi";
 import { FaTimes } from "react-icons/fa";
-import pop from "../Sounds/swoosh.mp3";
+import pop from "../Sounds/pop.mp3";
 import useSound from "use-sound";
 
 export const Header = (props) => {
@@ -17,7 +17,7 @@ export const Header = (props) => {
   //Function that hides and show the settings menu
   const handleSettingsClick = () => {
     setPlaybackRate(playbackRate); //+ 0.1);
-    play();
+    if(!spin) play();
     setSpin((prev) => !prev);
     props.onSettingsClicked();
   };
@@ -32,8 +32,8 @@ export const Header = (props) => {
         Pipers dream<span id="dot">.</span>
       </h2>
       <div className="settings-button" onClick={handleSettingsClick}>
-        {!spin && <FiSettings style={!spin && settingsSpin} />}
-        {spin && <FaTimes style={spin && settingsSpin} />}
+        {!spin && <FiSettings/>}
+        {spin && <FaTimes style={spin && settingsSpin}/>}
       </div>
     </div>
   );

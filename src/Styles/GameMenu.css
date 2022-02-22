@@ -2,7 +2,6 @@
 .card-items-menu div {
   display: flex;
   flex: 1 1 160px;
-  /*border: 1px solid #8b72bb9e;*/
   border-radius: 3px;
   justify-content: center;
   align-items: center;
@@ -17,10 +16,8 @@
   border-radius: 5px;
   display: inline-block;
   max-width: 500px;
-  /* height: 410px; */
   display: grid;
   padding-bottom: 8.01px;
-  /*grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));*/
 }
 
 #settingsMenuTitle {
@@ -48,4 +45,5 @@
   outline: none;
   align-items: center;
   font-size: 80%;
+  font-weight: bold;
 }

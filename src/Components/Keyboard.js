@@ -13,11 +13,7 @@ export const Keyboard = (props) => {
   useEffect(() => {
     function handleKeyDown(e) {
       e.preventDefault();
-
-      /* console.log(e.target);
-      console.log(e.keyCode);
-      console.log(e.code);*/
-
+    
       //Check if comma was pressed
       if (e.keyCode === 222) {
         setComma((state) => true);
