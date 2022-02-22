@@ -61,7 +61,7 @@
 .showSettings {
   opacity: 1;
   margin-left: 0;
-  animation: moveFromTop 0.4s backwards linear;
+  animation: fadeIn 0.4s backwards linear;
 }
 .hideSettings {
   opacity: 0;
@@ -99,4 +99,9 @@
 
 @keyframes moveFromTop {
   from { transform: translateY(-800px) }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
 }

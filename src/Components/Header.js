@@ -8,16 +8,16 @@ import useSound from "use-sound";
 export const Header = (props) => {
   const [spin, setSpin] = useState(false);
 
-  const [playbackRate, setPlaybackRate] = useState(0.9);
+  /*const [playbackRate, setPlaybackRate] = useState(0.9);
   const [play] = useSound(pop, {
     playbackRate,
     volume: props.sounds === "on" ? 0.5 : 0,
-  });
+  });*/
 
   //Function that hides and show the settings menu
   const handleSettingsClick = () => {
-    setPlaybackRate(playbackRate); //+ 0.1);
-    if(!spin) play();
+    /*setPlaybackRate(playbackRate); //+ 0.1);
+    if(!spin) play();*/
     setSpin((prev) => !prev);
     props.onSettingsClicked();
   };
